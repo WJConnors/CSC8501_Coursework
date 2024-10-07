@@ -36,18 +36,16 @@ void Board::initializeGrid(int a)
 
     std::unordered_set<int> alive_positions;
 
-    while (alive_positions.size() < a)
-    {
+    while (alive_positions.size() < a) {
         int random_position = distrib(gen);
-        if (grid[random_position] == 0)
-        {
+        if (grid[random_position] == 0) {
             grid[random_position] = 1;
             alive_positions.insert(random_position);
         }
     }
 }
 
-void Board::display_board()
+void Board::displayBoard()
 {
     for (int i = 0; i < x_size; i++) {
         std::cout << ".";
@@ -63,4 +61,47 @@ void Board::display_board()
         }
         std::cout << " ." << std::endl;
     }
+}
+
+int Board::getVectorIndex(int x, int y) const
+{
+    if (x < 0 || x >= x_size || y < 0 || y >= y_size) {
+        return -1;
+    }
+    return x * y_size + y;
+}
+
+int Board::countAliveNeighbors(int x, int y) const
+{
+    int alive_neighbors = 0;
+
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            if (i == 0 && j == 0) {
+                continue;
+            }
+            int neighbor_x = x + i;
+            int neighbor_y = y + j;
+            int neighbor_index = getVectorIndex(neighbor_x, neighbor_y);
+            if (neighbor_index != -1 && grid[neighbor_index] == 1) alive_neighbors++;
+        }
+    }
+    return alive_neighbors;
+}
+
+void Board::updateBoard()
+{
+    vector<int> newGrid = grid;
+    for (int i = 0; i < x_size; i++) {
+        for (int j = 0; j < y_size; j++) {
+            int neighbours = countAliveNeighbors(i, j);
+            int curIndex = getVectorIndex(i, j);
+            if (grid[curIndex] == 0)
+            {
+                if (neighbours == 3) newGrid[curIndex] = 1;
+            }
+            else if (neighbours < 2 || neighbours > 3) newGrid[curIndex] = 0;
+        }
+    }
+    grid = newGrid;
 }

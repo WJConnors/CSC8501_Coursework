@@ -6,5 +6,8 @@ using namespace std;
 int main()
 {
 	Board board = Board();
-	board.display_board();
+	board.displayBoard();
+	board.updateBoard();
+	cout << endl;
+	board.displayBoard();
 }
