@@ -29,6 +29,33 @@ Board::Board(int x, int y, int a) :
 	initializeGrid(a);
 }
 
+Board::Board(string fpath)
+{
+
+    ifstream fin;
+    fin.open(fpath);
+    string line;
+
+    getline(fin, line);
+    stepsTaken = stoi(line);
+    getline(fin, line);
+    x_size = stoi(line);
+    getline(fin, line);
+    y_size = stoi(line);
+
+    grid.resize(x_size * y_size, 0);
+
+    while (getline(fin, line)) {
+        int x, y;
+        istringstream coords(line);
+        coords >> x >> y;
+        int curIndex = getVectorIndex(x, y);
+        grid[curIndex] = 1;
+    }
+
+    originalGrid = grid;
+}
+
 void Board::initializeGrid(int a)
 {
 	grid.resize(x_size * y_size, 0);
@@ -51,17 +78,18 @@ void Board::initializeGrid(int a)
 
 void Board::displayBoard() const
 {
+    cout << "This is the board after " << stepsTaken << " turns" << endl;
     displayBoard(grid);
 }
 
 void Board::displayOriginalBoard()
 {
+    cout << "This is the original board" << endl;
     displayBoard(originalGrid);
 }
 
 void Board::displayBoard(vector<int> grid) const
 {
-    cout << "This is the board after " << stepsTaken << " turns" << endl;
     for (int i = 0; i < x_size; i++) {
         std::cout << ".";
         for (int j = 0; j < y_size; j++) {

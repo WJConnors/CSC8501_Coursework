@@ -5,18 +5,38 @@ using namespace std;
 
 int main()
 {
-	Board* board = new Board();
-	board->displayBoard();
+	cout << "Choose an option:" << endl;
+	cout << "1. Create a new board" << endl;
+	cout << "2. Load the saved board" << endl;
+	int in;
+	cin >> in;
+
+	Board* board;
+	switch (in) {
+	case 1:
+		board = new Board();
+		board->displayBoard();
+		break;
+	case 2:
+		board = new Board("test.txt");
+		board->displayBoard();
+		break;
+	default:
+		board = new Board();
+		board->displayBoard();
+		break;
+	}
+
+
 	bool sim = true;
 	while (sim) {
 		cout << "Choose an option:" << endl;
 		cout << "1. Step forward" << endl;
 		cout << "2. End simulation" << endl;
 		cout << "3. Save current state" << endl;
-		int in;
 		cin >> in;
 
-		switch (in) {
+		switch(in) {
 		case 1:
 			board->updateBoard();
 			board->displayBoard();
@@ -29,7 +49,11 @@ int main()
 			break;
 		}
 	}
+	
 	board->displayOriginalBoard();
 
 	delete(board);
+
+	return 0;
+
 }

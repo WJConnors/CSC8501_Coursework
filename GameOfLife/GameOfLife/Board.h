@@ -21,8 +21,8 @@ public:
 	void displayOriginalBoard();
 	void updateBoard();
 protected:
-	const int x_size;
-	const int y_size;
+	int x_size;
+	int y_size;
 	vector<int> grid;
 	vector<int> originalGrid;
 	int stepsTaken;
