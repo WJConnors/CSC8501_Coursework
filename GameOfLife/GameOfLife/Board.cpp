@@ -43,9 +43,20 @@ void Board::initializeGrid(int a)
             alive_positions.insert(random_position);
         }
     }
+    originalGrid = grid;
 }
 
-void Board::displayBoard()
+void Board::displayBoard() const
+{
+    displayBoard(grid);
+}
+
+void Board::displayOriginalBoard()
+{
+    displayBoard(originalGrid);
+}
+
+void Board::displayBoard(vector<int> grid) const
 {
     for (int i = 0; i < x_size; i++) {
         std::cout << ".";

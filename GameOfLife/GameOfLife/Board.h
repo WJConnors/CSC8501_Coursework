@@ -14,12 +14,15 @@ public:
 	int get_x_size() const { return x_size; }
 	int get_y_size() const { return y_size; }
 
-	void displayBoard();
+	void displayBoard() const;
+	void displayBoard(vector<int> grid) const;
+	void displayOriginalBoard();
 	void updateBoard();
 protected:
 	const int x_size;
 	const int y_size;
 	vector<int> grid;
+	vector<int> originalGrid;
 
 	void initializeGrid(int a);
 	int getVectorIndex(int x, int y) const;

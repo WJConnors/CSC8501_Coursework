@@ -5,8 +5,8 @@ using namespace std;
 
 int main()
 {
-	Board board = Board();
-	board.displayBoard();
+	Board* board = new Board();
+	board->displayBoard();
 	bool sim = true;
 	while (sim) {
 		cout << "Choose an option:" << endl;
@@ -17,11 +17,14 @@ int main()
 
 		switch (in) {
 		case 1:
-			board.updateBoard();
-			board.displayBoard();
+			board->updateBoard();
+			board->displayBoard();
 			break;
 		case 2:
 			sim = false;
 		}
 	}
+	board->displayOriginalBoard();
+
+	delete(board);
 }
