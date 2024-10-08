@@ -1,4 +1,7 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 #include <random>
 #include <unordered_set>
 #include "Board.h"
@@ -6,22 +9,22 @@
 using namespace std;
 
 Board::Board() :
-	x_size(default_x), y_size(default_y), turnsTaken(0)
+	x_size(default_x), y_size(default_y), stepsTaken(0)
 {
 	initializeGrid(default_alive);
 }
 Board::Board(int a) :
-	x_size(default_x), y_size(default_y), turnsTaken(0)
+	x_size(default_x), y_size(default_y), stepsTaken(0)
 {
 	initializeGrid(a);
 }
 Board::Board(int x, int y) :
-	x_size(x), y_size(y), turnsTaken(0)
+	x_size(x), y_size(y), stepsTaken(0)
 {
 	initializeGrid(default_alive);
 }
 Board::Board(int x, int y, int a) :
-	x_size(x), y_size(y), turnsTaken(0)
+	x_size(x), y_size(y), stepsTaken(0)
 {
 	initializeGrid(a);
 }
@@ -58,7 +61,7 @@ void Board::displayOriginalBoard()
 
 void Board::displayBoard(vector<int> grid) const
 {
-    cout << "This is the board after " << turnsTaken << " turns" << endl;
+    cout << "This is the board after " << stepsTaken << " turns" << endl;
     for (int i = 0; i < x_size; i++) {
         std::cout << ".";
         for (int j = 0; j < y_size; j++) {
@@ -68,10 +71,10 @@ void Board::displayBoard(vector<int> grid) const
                 std::cout << " .";
             }
             else {
-                std::cout << " O";
+                std::cout << "O.";
             }
         }
-        std::cout << " ." << std::endl;
+        std::cout << std::endl;
     }
 }
 
@@ -116,5 +119,23 @@ void Board::updateBoard()
         }
     }
     grid = newGrid;
-    turnsTaken++;
+    stepsTaken++;
+}
+
+void Board::saveBoard(string fpath) const
+{
+    ofstream fout;
+    fout.open(fpath);
+    fout << stepsTaken << endl;
+    fout << x_size << endl;
+    fout << y_size << endl;
+    for (int i = 0; i < x_size; i++) {
+        for (int j = 0; j < y_size; j++) {
+            int curIndex = getVectorIndex(i, j);
+            if (grid[curIndex] == 1) {
+                fout << i << " " << j << endl;
+            }
+        }
+    }
+    fout.close();
 }

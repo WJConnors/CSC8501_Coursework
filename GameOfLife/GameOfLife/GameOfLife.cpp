@@ -12,6 +12,7 @@ int main()
 		cout << "Choose an option:" << endl;
 		cout << "1. Step forward" << endl;
 		cout << "2. End simulation" << endl;
+		cout << "3. Save current state" << endl;
 		int in;
 		cin >> in;
 
@@ -22,6 +23,10 @@ int main()
 			break;
 		case 2:
 			sim = false;
+			break;
+		case 3:
+			board->saveBoard("test.txt");
+			break;
 		}
 	}
 	board->displayOriginalBoard();

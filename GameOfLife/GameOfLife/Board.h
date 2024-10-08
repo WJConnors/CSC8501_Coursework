@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -10,10 +11,12 @@ public:
 	Board(int a);
 	Board(int x, int y);
 	Board(int x, int y, int a);
+	Board(string fpath);
 
 	int get_x_size() const { return x_size; }
 	int get_y_size() const { return y_size; }
 	void displayBoard() const;
+	void saveBoard(string fpath) const;
 	
 	void displayOriginalBoard();
 	void updateBoard();
@@ -22,7 +25,7 @@ protected:
 	const int y_size;
 	vector<int> grid;
 	vector<int> originalGrid;
-	int turnsTaken;
+	int stepsTaken;
 
 	void initializeGrid(int a);
 	void displayBoard(vector<int> grid) const;
