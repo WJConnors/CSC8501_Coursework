@@ -6,22 +6,22 @@
 using namespace std;
 
 Board::Board() :
-	x_size(default_x), y_size(default_y)
+	x_size(default_x), y_size(default_y), turnsTaken(0)
 {
 	initializeGrid(default_alive);
 }
 Board::Board(int a) :
-	x_size(default_x), y_size(default_y)
+	x_size(default_x), y_size(default_y), turnsTaken(0)
 {
 	initializeGrid(a);
 }
 Board::Board(int x, int y) :
-	x_size(x), y_size(y)
+	x_size(x), y_size(y), turnsTaken(0)
 {
 	initializeGrid(default_alive);
 }
 Board::Board(int x, int y, int a) :
-	x_size(x), y_size(y)
+	x_size(x), y_size(y), turnsTaken(0)
 {
 	initializeGrid(a);
 }
@@ -58,6 +58,7 @@ void Board::displayOriginalBoard()
 
 void Board::displayBoard(vector<int> grid) const
 {
+    cout << "This is the board after " << turnsTaken << " turns" << endl;
     for (int i = 0; i < x_size; i++) {
         std::cout << ".";
         for (int j = 0; j < y_size; j++) {
@@ -115,4 +116,5 @@ void Board::updateBoard()
         }
     }
     grid = newGrid;
+    turnsTaken++;
 }

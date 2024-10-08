@@ -13,9 +13,8 @@ public:
 
 	int get_x_size() const { return x_size; }
 	int get_y_size() const { return y_size; }
-
 	void displayBoard() const;
-	void displayBoard(vector<int> grid) const;
+	
 	void displayOriginalBoard();
 	void updateBoard();
 protected:
@@ -23,8 +22,10 @@ protected:
 	const int y_size;
 	vector<int> grid;
 	vector<int> originalGrid;
+	int turnsTaken;
 
 	void initializeGrid(int a);
+	void displayBoard(vector<int> grid) const;
 	int getVectorIndex(int x, int y) const;
 	int countAliveNeighbors(int x, int y) const;
 
