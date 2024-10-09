@@ -9,24 +9,24 @@
 using namespace std;
 
 Board::Board() :
-    x_size(default_x), y_size(default_y), stepsTaken(0)
+    x_size(default_x), y_size(default_y), stepsTaken(0), aliveCells(default_alive)
 {
-	initializeGrid(default_alive);
+	initializeGrid(aliveCells);
 }
 Board::Board(int a) :
-    x_size(default_x), y_size(default_y), stepsTaken(0)
+    x_size(default_x), y_size(default_y), stepsTaken(0), aliveCells(a)
 {
-	initializeGrid(a);
+	initializeGrid(aliveCells);
 }
 Board::Board(int x, int y) :
-    x_size(x), y_size(y), stepsTaken(0)
+    x_size(x), y_size(y), stepsTaken(0), aliveCells(default_alive)
 {
-	initializeGrid(default_alive);
+	initializeGrid(aliveCells);
 }
 Board::Board(int x, int y, int a) :
-    x_size(x), y_size(y), stepsTaken(0)
+    x_size(x), y_size(y), stepsTaken(0), aliveCells(a)
 {
-	initializeGrid(a);
+	initializeGrid(aliveCells);
 }
 
 Board::Board(string fpath)
@@ -109,9 +109,15 @@ void Board::updateBoard()
             int neighbours{ countAliveNeighbors(i, j) };
             int curIndex{ getVectorIndex(i, j) };
             if (grid[curIndex] == 0) {
-                if (neighbours == 3) newGrid[curIndex] = 1;
+                if (neighbours == 3) {
+                    newGrid[curIndex] = 1;
+                    aliveCells++;
+                }
             }
-            else if (neighbours < 2 || neighbours > 3) newGrid[curIndex] = 0;
+            else if (neighbours < 2 || neighbours > 3) {
+                newGrid[curIndex] = 0;
+                aliveCells--;
+            }
         }
     }
     grid = newGrid;

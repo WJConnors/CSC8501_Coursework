@@ -54,6 +54,13 @@ void GameController::gameLoop()
                 board->saveBoard("test.txt");
                 break;
             }
+
+            if (board->get_aliveCells() == 0) {
+                cout << "The board is entirely dead so the simulation has ended. Press enter to continue." << endl;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cin.get();
+                sim = false;
+            }
         }
 
         displayOriginalBoard();

@@ -19,10 +19,12 @@ protected:
 	vector<int> grid;
 	vector<int> originalGrid;
 	int stepsTaken;
+	int aliveCells;
 
 	int get_x_size() const { return x_size; }
 	int get_y_size() const { return y_size; }
 	int get_stepsTaken() const { return stepsTaken; }
+	int get_aliveCells() const { return aliveCells; }
 	vector<int> get_grid() const { return grid; }
 	vector<int> get_originalGrid() const { return originalGrid; }
 
