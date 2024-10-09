@@ -8,97 +8,28 @@
 
 using namespace std;
 
-void Board::gameLoop()
+Board::Board() :
+    x_size(default_x), y_size(default_y), stepsTaken(0)
 {
-    bool loop{ true };
-    while (loop) {
-        cout << "Choose an option:" << endl;
-        cout << "1. Create a new board" << endl;
-        cout << "2. Load the saved board" << endl;
-        int in;
-        cin >> in;
-
-        switch (in) {
-        case 1:
-            setupBoard();
-            displayBoard();
-            break;
-        case 2:
-            setupBoard("test.txt");
-            displayBoard();
-            break;
-        default:
-            setupBoard();
-            displayBoard();
-            break;
-        }
-
-        bool sim{ true };
-        while (sim) {
-            cout << "Choose an option:" << endl;
-            cout << "1. Step forward" << endl;
-            cout << "2. End simulation" << endl;
-            cout << "3. Save current state" << endl;
-            cin >> in;
-
-            switch (in) {
-            case 1:
-                updateBoard();
-                displayBoard();
-                break;
-            case 2:
-                sim = false;
-                break;
-            case 3:
-                saveBoard("test.txt");
-                break;
-            }
-        }
-
-        displayOriginalBoard();
-
-        cout << "Choose an option:" << endl;
-        cout << "1. Start a new simulation" << endl;
-        cout << "2. Exit the program" << endl;
-        cin >> in;
-
-        switch (in) {
-        case 2:
-            loop = false;
-        }
-    }
-}
-
-void Board::setupBoard()
-{
-    x_size = default_x;
-    y_size = default_y;
-    stepsTaken = 0;
 	initializeGrid(default_alive);
 }
-void Board::setupBoard(int a)
+Board::Board(int a) :
+    x_size(default_x), y_size(default_y), stepsTaken(0)
 {
-    x_size = default_x;
-    y_size = default_y;
-    stepsTaken = 0;
 	initializeGrid(a);
 }
-void Board::setupBoard(int x, int y)
+Board::Board(int x, int y) :
+    x_size(x), y_size(y), stepsTaken(0)
 {
-    x_size = x;
-    y_size = y;
-    stepsTaken = 0;
 	initializeGrid(default_alive);
 }
-void Board::setupBoard(int x, int y, int a)
+Board::Board(int x, int y, int a) :
+    x_size(x), y_size(y), stepsTaken(0)
 {
-    x_size = x;
-    y_size = y;
-    stepsTaken = 0;
 	initializeGrid(a);
 }
 
-void Board::setupBoard(string fpath)
+Board::Board(string fpath)
 {
     ifstream fin;
     fin.open(fpath);
@@ -142,35 +73,6 @@ void Board::initializeGrid(int a)
         }
     }
     originalGrid = grid;
-}
-
-void Board::displayBoard() const
-{
-    cout << "This is the board after " << stepsTaken << " turns" << endl;
-    displayBoard(grid);
-}
-
-void Board::displayOriginalBoard() const
-{
-    cout << "This is the original board" << endl;
-    displayBoard(originalGrid);
-}
-
-void Board::displayBoard(vector<int> grid) const
-{
-    for (int i = 0; i < x_size; i++) {
-        cout << ".";
-        for (int j = 0; j < y_size; j++) {
-            int index = i * y_size + j;
-            if (grid[index] == 0) {
-                cout << " .";
-            }
-            else {
-                cout << "O.";
-            }
-        }
-        cout << endl;
-    }
 }
 
 int Board::getVectorIndex(int x, int y) const

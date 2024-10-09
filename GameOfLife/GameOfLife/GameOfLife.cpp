@@ -1,15 +1,12 @@
 #include <iostream>
-#include "Board.h"
+#include "GameController.h"
 
 using namespace std;
 
 int main()
 {
-	Board* board{ new Board() };
-
-	board->gameLoop();
-
-	delete(board);
+	GameController gc = GameController();
+	gc.gameLoop();
 
 	return 0;
 

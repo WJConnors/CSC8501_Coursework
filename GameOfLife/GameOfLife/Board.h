@@ -7,7 +7,11 @@ using namespace std;
 class Board
 {
 public:
-	void gameLoop();
+	Board();
+	Board(int a);
+	Board(int x, int y);
+	Board(int x, int y, int a);
+	Board(string fpath);
 
 protected:
 	int x_size;
@@ -18,19 +22,13 @@ protected:
 
 	int get_x_size() const { return x_size; }
 	int get_y_size() const { return y_size; }
+	int get_stepsTaken() const { return stepsTaken; }
+	vector<int> get_grid() const { return grid; }
+	vector<int> get_originalGrid() const { return originalGrid; }
 
-	void setupBoard();
-	void setupBoard(int a);
-	void setupBoard(int x, int y);
-	void setupBoard(int x, int y, int a);
-	void setupBoard(string fpath);
 	void initializeGrid(int a);
 
 	void updateBoard();
-
-	void displayBoard() const;
-	void displayBoard(vector<int> grid) const;
-	void displayOriginalBoard() const;
 
 	void saveBoard(string fpath) const;
 
@@ -40,4 +38,6 @@ protected:
 	static const int default_x = 30;
 	static const int default_y = 30;
 	static const int default_alive = 25;
+
+	friend class GameController;
 };
