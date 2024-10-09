@@ -55,7 +55,7 @@ void GameController::gameLoop()
                 break;
             }
 
-            if (board->get_aliveCells() == 0) {
+            if (board->get_ended()) {
                 simInterrupt();
                 sim = false;
             }

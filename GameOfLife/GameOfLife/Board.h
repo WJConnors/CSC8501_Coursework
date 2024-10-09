@@ -14,17 +14,19 @@ public:
 	Board(string fpath);
 
 protected:
-	int x_size;
-	int y_size;
+	int x_size{ default_x };
+	int y_size{ default_y };
 	vector<int> grid;
 	vector<int> originalGrid;
-	int stepsTaken;
-	int aliveCells;
+	int stepsTaken{ 0 };
+	int aliveCells{ default_alive };
+	bool ended{ false };
 
 	int get_x_size() const { return x_size; }
 	int get_y_size() const { return y_size; }
 	int get_stepsTaken() const { return stepsTaken; }
 	int get_aliveCells() const { return aliveCells; }
+	bool get_ended() const { return ended; }
 	vector<int> get_grid() const { return grid; }
 	vector<int> get_originalGrid() const { return originalGrid; }
 

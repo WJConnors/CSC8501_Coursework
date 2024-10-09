@@ -8,23 +8,22 @@
 
 using namespace std;
 
-Board::Board() :
-    x_size(default_x), y_size(default_y), stepsTaken(0), aliveCells(default_alive)
+Board::Board()
 {
 	initializeGrid(aliveCells);
 }
 Board::Board(int a) :
-    x_size(default_x), y_size(default_y), stepsTaken(0), aliveCells(a)
+    aliveCells(a)
 {
 	initializeGrid(aliveCells);
 }
 Board::Board(int x, int y) :
-    x_size(x), y_size(y), stepsTaken(0), aliveCells(default_alive)
+    x_size(x), y_size(y)
 {
 	initializeGrid(aliveCells);
 }
 Board::Board(int x, int y, int a) :
-    x_size(x), y_size(y), stepsTaken(0), aliveCells(a)
+    x_size(x), y_size(y), aliveCells(a)
 {
 	initializeGrid(aliveCells);
 }
@@ -50,6 +49,7 @@ Board::Board(string fpath)
         coords >> x >> y;
         int curIndex = getVectorIndex(x, y);
         grid[curIndex] = 1;
+        aliveCells++;
     }
 
     originalGrid = grid;
@@ -120,6 +120,7 @@ void Board::updateBoard()
             }
         }
     }
+    if (aliveCells == 0 || grid == newGrid) ended = true;
     grid = newGrid;
     stepsTaken++;
 }
