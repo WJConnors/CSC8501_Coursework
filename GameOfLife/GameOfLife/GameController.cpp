@@ -56,9 +56,7 @@ void GameController::gameLoop()
             }
 
             if (board->get_aliveCells() == 0) {
-                cout << "The board is entirely dead so the simulation has ended. Press enter to continue." << endl;
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cin.get();
+                simInterrupt();
                 sim = false;
             }
         }
@@ -110,5 +108,21 @@ void GameController::displayBoard(vector<int> grid) const
             }
         }
         cout << endl;
+    }
+}
+
+void GameController::simInterrupt() const
+{
+    cout << "The simulation has concluded. Choose an option" << endl;
+    cout << "1. Save the current board" << endl;
+    cout << "2. Discard the current board" << endl;
+    int in;
+    cin >> in;
+
+    switch (in)
+    {
+    case 1:
+        board->saveBoard("test.txt");
+        break;
     }
 }
