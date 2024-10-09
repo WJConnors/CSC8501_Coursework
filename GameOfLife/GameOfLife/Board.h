@@ -24,14 +24,16 @@ protected:
 	void setupBoard(int x, int y);
 	void setupBoard(int x, int y, int a);
 	void setupBoard(string fpath);
+	void initializeGrid(int a);
 
-	void displayBoard() const;
-	void saveBoard(string fpath) const;
-	void displayOriginalBoard();
 	void updateBoard();
 
-	void initializeGrid(int a);
+	void displayBoard() const;
 	void displayBoard(vector<int> grid) const;
+	void displayOriginalBoard();
+
+	void saveBoard(string fpath) const;
+
 	int getVectorIndex(int x, int y) const;
 	int countAliveNeighbors(int x, int y) const;
 

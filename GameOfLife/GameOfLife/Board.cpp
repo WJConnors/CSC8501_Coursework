@@ -98,7 +98,6 @@ void Board::setupBoard(int x, int y, int a)
 
 void Board::setupBoard(string fpath)
 {
-
     ifstream fin;
     fin.open(fpath);
     string line;
@@ -110,7 +109,7 @@ void Board::setupBoard(string fpath)
     getline(fin, line);
     y_size = stoi(line);
 
-    grid.resize(x_size * y_size, 0);
+    grid.resize(static_cast<size_t>(x_size) * static_cast<size_t>(y_size), 0);
 
     while (getline(fin, line)) {
         int x, y;
@@ -125,7 +124,7 @@ void Board::setupBoard(string fpath)
 
 void Board::initializeGrid(int a)
 {
-	grid.resize(x_size * y_size, 0);
+    grid.resize(static_cast<size_t>(x_size) * static_cast<size_t>(y_size), 0);
 
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -158,18 +157,17 @@ void Board::displayOriginalBoard()
 void Board::displayBoard(vector<int> grid) const
 {
     for (int i = 0; i < x_size; i++) {
-        std::cout << ".";
+        cout << ".";
         for (int j = 0; j < y_size; j++) {
             int index = i * y_size + j;
-
             if (grid[index] == 0) {
-                std::cout << " .";
+                cout << " .";
             }
             else {
-                std::cout << "O.";
+                cout << "O.";
             }
         }
-        std::cout << std::endl;
+        cout << endl;
     }
 }
 
@@ -190,9 +188,9 @@ int Board::countAliveNeighbors(int x, int y) const
             if (i == 0 && j == 0) {
                 continue;
             }
-            int neighbor_x = x + i;
-            int neighbor_y = y + j;
-            int neighbor_index = getVectorIndex(neighbor_x, neighbor_y);
+            int neighbor_x{ x + i };
+            int neighbor_y{ y + j };
+            int neighbor_index{ getVectorIndex(neighbor_x, neighbor_y) };
             if (neighbor_index != -1 && grid[neighbor_index] == 1) alive_neighbors++;
         }
     }
@@ -204,10 +202,9 @@ void Board::updateBoard()
     vector<int> newGrid = grid;
     for (int i = 0; i < x_size; i++) {
         for (int j = 0; j < y_size; j++) {
-            int neighbours = countAliveNeighbors(i, j);
-            int curIndex = getVectorIndex(i, j);
-            if (grid[curIndex] == 0)
-            {
+            int neighbours{ countAliveNeighbors(i, j) };
+            int curIndex{ getVectorIndex(i, j) };
+            if (grid[curIndex] == 0) {
                 if (neighbours == 3) newGrid[curIndex] = 1;
             }
             else if (neighbours < 2 || neighbours > 3) newGrid[curIndex] = 0;

@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-	Board* board = new Board();
+	Board* board{ new Board() };
 
 	board->gameLoop();
 
