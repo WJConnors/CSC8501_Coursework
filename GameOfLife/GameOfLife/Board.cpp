@@ -8,28 +8,95 @@
 
 using namespace std;
 
-Board::Board() :
-	x_size(default_x), y_size(default_y), stepsTaken(0)
+void Board::gameLoop()
 {
+    bool loop{ true };
+    while (loop) {
+        cout << "Choose an option:" << endl;
+        cout << "1. Create a new board" << endl;
+        cout << "2. Load the saved board" << endl;
+        int in;
+        cin >> in;
+
+        switch (in) {
+        case 1:
+            setupBoard();
+            displayBoard();
+            break;
+        case 2:
+            setupBoard("test.txt");
+            displayBoard();
+            break;
+        default:
+            setupBoard();
+            displayBoard();
+            break;
+        }
+
+        bool sim{ true };
+        while (sim) {
+            cout << "Choose an option:" << endl;
+            cout << "1. Step forward" << endl;
+            cout << "2. End simulation" << endl;
+            cout << "3. Save current state" << endl;
+            cin >> in;
+
+            switch (in) {
+            case 1:
+                updateBoard();
+                displayBoard();
+                break;
+            case 2:
+                sim = false;
+                break;
+            case 3:
+                saveBoard("test.txt");
+                break;
+            }
+        }
+
+        cout << "Choose an option:" << endl;
+        cout << "1. Start a new simulation" << endl;
+        cout << "2. Exit the program" << endl;
+        cin >> in;
+
+        switch (in) {
+        case 2:
+            loop = false;
+        }
+    }
+}
+
+void Board::setupBoard()
+{
+    x_size = default_x;
+    y_size = default_y;
+    stepsTaken = 0;
 	initializeGrid(default_alive);
 }
-Board::Board(int a) :
-	x_size(default_x), y_size(default_y), stepsTaken(0)
+void Board::setupBoard(int a)
 {
+    x_size = default_x;
+    y_size = default_y;
+    stepsTaken = 0;
 	initializeGrid(a);
 }
-Board::Board(int x, int y) :
-	x_size(x), y_size(y), stepsTaken(0)
+void Board::setupBoard(int x, int y)
 {
+    x_size = x;
+    y_size = y;
+    stepsTaken = 0;
 	initializeGrid(default_alive);
 }
-Board::Board(int x, int y, int a) :
-	x_size(x), y_size(y), stepsTaken(0)
+void Board::setupBoard(int x, int y, int a)
 {
+    x_size = x;
+    y_size = y;
+    stepsTaken = 0;
 	initializeGrid(a);
 }
 
-Board::Board(string fpath)
+void Board::setupBoard(string fpath)
 {
 
     ifstream fin;
