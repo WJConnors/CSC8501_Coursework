@@ -30,7 +30,7 @@ protected:
 
 	void displayBoard() const;
 	void displayBoard(vector<int> grid) const;
-	void displayOriginalBoard();
+	void displayOriginalBoard() const;
 
 	void saveBoard(string fpath) const;
 

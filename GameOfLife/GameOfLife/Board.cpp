@@ -55,6 +55,8 @@ void Board::gameLoop()
             }
         }
 
+        displayOriginalBoard();
+
         cout << "Choose an option:" << endl;
         cout << "1. Start a new simulation" << endl;
         cout << "2. Exit the program" << endl;
@@ -148,7 +150,7 @@ void Board::displayBoard() const
     displayBoard(grid);
 }
 
-void Board::displayOriginalBoard()
+void Board::displayOriginalBoard() const
 {
     cout << "This is the original board" << endl;
     displayBoard(originalGrid);
