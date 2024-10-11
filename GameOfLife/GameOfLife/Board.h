@@ -32,6 +32,8 @@ private:
 	int stepsTaken{ 0 };
 	int aliveCells{ default_alive };
 	bool ended{ false };
+	bool foundBlock{ false };
+	bool foundBeehive{ false };
 
 	void initializeGrid(int a);
 
@@ -55,9 +57,4 @@ private:
 	friend class GameController;
 	friend class ExperimentController;
 
-	bool foundBlock{ false };
-	bool foundBeehive{ false };
-	static const initializer_list<pair<int, int>> beehive() {
-		return { {0,1},{0,2},{1,0},{1,3},{2,1},{2,2} };
-	}
 };

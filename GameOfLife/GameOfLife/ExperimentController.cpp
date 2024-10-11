@@ -8,6 +8,7 @@ void ExperimentController::gameLoop()
 	while (experiment) {
 		board = new Board();
 		experimentCounter++;
+		cout << experimentCounter << endl;
 
 		while (true){
 			board->updateBoard();
