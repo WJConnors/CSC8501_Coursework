@@ -1,9 +1,8 @@
 #include "Board.h"
-#include <iostream>
  
 void Board::checkStaticPatterns()
 {
-    checkBlock();
+    //checkBlock();
     checkBeehive();
 }
 
@@ -38,10 +37,7 @@ void Board::checkBlock()
                     }
                 }
             }
-            if (foundBlock) {
-                std::cout << "found block" << std::endl;
-                return;
-            }
+            if (foundBlock) return;
         }
     }
 }
@@ -78,10 +74,7 @@ void Board::checkBeehive()
                     }
                 }
             }
-            if (foundBeehive) {
-                std::cout << "found beehive" << std::endl;
-                return;
-            }
+            if (foundBeehive) return;
         }
     }
 }

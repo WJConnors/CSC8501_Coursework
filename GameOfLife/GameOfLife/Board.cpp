@@ -120,7 +120,9 @@ void Board::updateBoard()
             }
         }
     }
-    if (aliveCells == 0 || grid == newGrid) ended = true;
+    
+    if (aliveCells == 0 || grid == newGrid || storedGrid == newGrid) ended = true;
+    storedGrid = grid;
     grid = newGrid;
     stepsTaken++;
     checkStaticPatterns();

@@ -28,6 +28,7 @@ private:
 	int x_size{ default_x };
 	int y_size{ default_y };
 	vector<int> grid;
+	vector<int> storedGrid;
 	vector<int> originalGrid;
 	int stepsTaken{ 0 };
 	int aliveCells{ default_alive };
