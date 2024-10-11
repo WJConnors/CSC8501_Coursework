@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <initializer_list>
 
 using namespace std;
 
@@ -18,6 +19,8 @@ public:
 	int get_stepsTaken() const { return stepsTaken; }
 	int get_aliveCells() const { return aliveCells; }
 	bool get_ended() const { return ended; }
+	bool get_foundBlock() const { return foundBlock; }
+	bool get_foundBeehive() const { return foundBeehive; }
 	vector<int> get_grid() const { return grid; }
 	vector<int> get_originalGrid() const { return originalGrid; }
 
@@ -41,9 +44,23 @@ private:
 	int getVectorIndex(int x, int y) const;
 	int countAliveNeighbors(int x, int y) const;
 
+	void checkStaticPatterns();
+	void checkBlock();
+	void checkBeehive();
+
 	static const int default_x = 30;
 	static const int default_y = 30;
 	static const int default_alive = 25;
 
 	friend class GameController;
+
+	// ================= Patterns =================
+	bool foundBlock{ false };
+	static constexpr initializer_list<pair<int, int>> block() {
+		return { {0, 0}, {0, 1}, {1, 0}, {1, 1} };
+	}
+	bool foundBeehive{ false };
+	static const initializer_list<pair<int, int>> beehive() {
+		return { {0,1},{0,2},{1,0},{1,3},{2,1},{2,2} };
+	}
 };

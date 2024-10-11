@@ -123,6 +123,7 @@ void Board::updateBoard()
     if (aliveCells == 0 || grid == newGrid) ended = true;
     grid = newGrid;
     stepsTaken++;
+    checkStaticPatterns();
 }
 
 void Board::saveBoard(string fpath) const { saver(fpath, false); }

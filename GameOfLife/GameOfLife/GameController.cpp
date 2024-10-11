@@ -46,6 +46,9 @@ void GameController::gameLoop()
             case 1:
                 board->updateBoard();
                 displayBoard();
+                if (board->get_foundBlock() || board->get_foundBeehive()) {
+                    cout << "A pattern has been found" << endl;
+                }
                 break;
             case 2:
                 sim = false;
