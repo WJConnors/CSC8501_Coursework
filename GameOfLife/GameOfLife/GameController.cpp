@@ -3,11 +3,6 @@
 
 using namespace std;
 
-GameController::GameController()
-{
-    createBoard();
-}
-
 void GameController::createBoard()
 {
     cout << "Choose an option:" << endl;
@@ -30,6 +25,8 @@ void GameController::createBoard()
 
 void GameController::gameLoop()
 {
+    createBoard();
+
     bool loop{ true };
     int in;
     while (loop) {

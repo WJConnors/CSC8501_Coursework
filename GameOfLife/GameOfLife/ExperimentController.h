@@ -4,8 +4,7 @@
 class ExperimentController : public GameController
 {
 public:
-	ExperimentController();
 	void gameLoop() override;
 private:
-	void createBoard() override;
+	int experimentCounter{ 0 };
 };

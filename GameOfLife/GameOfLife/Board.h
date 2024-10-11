@@ -53,6 +53,7 @@ private:
 	static const int default_alive = 25;
 
 	friend class GameController;
+	friend class ExperimentController;
 
 	// ================= Patterns =================
 	bool foundBlock{ false };

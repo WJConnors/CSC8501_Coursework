@@ -4,14 +4,13 @@
 class GameController
 {
 public:
-	GameController();
 	virtual void gameLoop();
 
 	virtual ~GameController() = default;
 protected:
 	Board* board;
 
-	virtual void createBoard();
+	void createBoard();
 	void displayBoard() const;
 	void displayBoard(vector<int> grid) const;
 	void displayOriginalBoard() const;
