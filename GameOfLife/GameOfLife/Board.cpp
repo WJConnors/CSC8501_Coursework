@@ -125,8 +125,21 @@ void Board::updateBoard()
     stepsTaken++;
 }
 
-void Board::saveBoard(string fpath) const
+void Board::saveBoard(string fpath) const { saver(fpath, false); }
+void Board::saveOriginalBoard(string fpath) const { saver(fpath, true); }
+
+void Board::saver(string fpath, bool original) const
 {
+    vector<int> grid;
+    int stepsTaken;
+    if (original) {
+        grid = originalGrid;
+        stepsTaken = 0;
+    }
+    else {
+        grid = this->grid;
+        stepsTaken = this->stepsTaken;
+    }
     ofstream fout;
     fout.open(fpath);
     fout << stepsTaken << endl;

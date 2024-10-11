@@ -130,6 +130,7 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameOfLife.cpp" />
+    <ClCompile Include="PatternDetection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />

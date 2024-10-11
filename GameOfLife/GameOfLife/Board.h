@@ -13,15 +13,6 @@ public:
 	Board(int x, int y, int a);
 	Board(string fpath);
 
-protected:
-	int x_size{ default_x };
-	int y_size{ default_y };
-	vector<int> grid;
-	vector<int> originalGrid;
-	int stepsTaken{ 0 };
-	int aliveCells{ default_alive };
-	bool ended{ false };
-
 	int get_x_size() const { return x_size; }
 	int get_y_size() const { return y_size; }
 	int get_stepsTaken() const { return stepsTaken; }
@@ -30,11 +21,22 @@ protected:
 	vector<int> get_grid() const { return grid; }
 	vector<int> get_originalGrid() const { return originalGrid; }
 
+private:
+	int x_size{ default_x };
+	int y_size{ default_y };
+	vector<int> grid;
+	vector<int> originalGrid;
+	int stepsTaken{ 0 };
+	int aliveCells{ default_alive };
+	bool ended{ false };
+
 	void initializeGrid(int a);
 
 	void updateBoard();
 
 	void saveBoard(string fpath) const;
+	void saveOriginalBoard(string fpath) const;
+	void saver(string fpath, bool original) const;
 
 	int getVectorIndex(int x, int y) const;
 	int countAliveNeighbors(int x, int y) const;

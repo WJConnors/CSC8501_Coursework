@@ -115,7 +115,8 @@ void GameController::simInterrupt() const
 {
     cout << "The simulation has concluded. Choose an option" << endl;
     cout << "1. Save the current board" << endl;
-    cout << "2. Discard the current board" << endl;
+    cout << "2. Save the original board" << endl;
+    cout << "3. Discard the current board" << endl;
     int in;
     cin >> in;
 
@@ -123,6 +124,9 @@ void GameController::simInterrupt() const
     {
     case 1:
         board->saveBoard("test.txt");
+        break;
+    case 2:
+        board->saveOriginalBoard("test.txt");
         break;
     }
 }
