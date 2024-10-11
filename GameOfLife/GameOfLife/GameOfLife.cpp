@@ -6,6 +6,9 @@ using namespace std;
 
 int main()
 {
+	//GameController gc = GameController();
+	//gc.gameLoop();
+
 	ExperimentController ec = ExperimentController();
 	ec.gameLoop();
 

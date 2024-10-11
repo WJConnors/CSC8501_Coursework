@@ -55,11 +55,7 @@ private:
 	friend class GameController;
 	friend class ExperimentController;
 
-	// ================= Patterns =================
 	bool foundBlock{ false };
-	static constexpr initializer_list<pair<int, int>> block() {
-		return { {0, 0}, {0, 1}, {1, 0}, {1, 1} };
-	}
 	bool foundBeehive{ false };
 	static const initializer_list<pair<int, int>> beehive() {
 		return { {0,1},{0,2},{1,0},{1,3},{2,1},{2,2} };
