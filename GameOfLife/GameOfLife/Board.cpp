@@ -73,6 +73,7 @@ void Board::initializeGrid(int a)
         }
     }
     originalGrid = grid;
+    storedGrids.push_back(grid);
 }
 
 int Board::getVectorIndex(int x, int y) const
@@ -121,9 +122,15 @@ void Board::updateBoard()
         }
     }
     
-    if (aliveCells == 0 || grid == newGrid || storedGrid == newGrid) ended = true;
-    storedGrid = grid;
+    if (aliveCells == 0 || grid == newGrid) ended = true;
     grid = newGrid;
+    for (vector<int> tempGrid : storedGrids) {
+        if (tempGrid == grid) {
+            ended = true;
+            break;
+        }
+    }
+    storedGrids.push_back(grid);
     stepsTaken++;
     checkStaticPatterns();
 }
