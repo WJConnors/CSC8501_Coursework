@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include <initializer_list>
+#include <array>
 
 using namespace std;
 
@@ -48,8 +48,8 @@ private:
 	int countAliveNeighbors(int x, int y) const;
 
 	void checkStaticPatterns();
-	void checkBlock();
-	void checkBeehive();
+	template <size_t N>
+	bool checkPattern(const int(&pattern)[N], int pattern_x_size, int pattern_y_size);
 
 	static const int default_x = 30;
 	static const int default_y = 30;
@@ -57,5 +57,37 @@ private:
 
 	friend class GameController;
 	friend class ExperimentController;
+
+	// ================= Patterns =================
+
+	int block_x_size{ 4 };
+	int block_y_size{ 4 };
+	int block[16]{
+	0,0,0,0,
+	0,1,1,0,
+	0,1,1,0,
+	0,0,0,0
+	};
+
+	int beehive_x_size = 5;
+	int beehive_y_size = 6;
+	int beehive[30]{
+	 0,0,0,0,0,0,
+	 0,0,1,1,0,0,
+	 0,1,0,0,1,0,
+	 0,0,1,1,0,0,
+	 0,0,0,0,0,0
+	};
+
+	int rotated_beehive_x_size = 6;
+	int rotated_beehive_y_size = 5;
+	int rotatedBeeHive[30]{
+		0,0,0,0,0,
+		0,0,1,0,0,
+		0,1,0,1,0,
+		0,1,0,1,0,
+		0,0,1,0,0,
+		0,0,0,0,0
+	};
 
 };
