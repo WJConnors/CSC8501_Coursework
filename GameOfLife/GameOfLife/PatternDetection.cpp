@@ -1,7 +1,7 @@
 #include "Board.h"
 
 using namespace Patterns;
- 
+
 void Board::checkStaticPatterns()
 {
     foundBlock = checkPattern(block, block_x_size, block_y_size).first;
@@ -45,7 +45,7 @@ bool Board::checkOscillator(const int(&pattern1)[N], const int(&pattern2)[N], in
         if (result.first && result.second.first == oc.x && result.second.second == oc.y) {
             oc.versionFound = 2;
             return true;
-            
+
         }
         break;
     }
@@ -87,7 +87,9 @@ pair<bool, pair<int, int>> Board::checkPattern(const int(&pattern)[N], int patte
                     }
                 }
             }
-            if (foundPattern) return make_pair(true, make_pair(i, j));
+            if (foundPattern) {
+                return make_pair(true, make_pair(i, j));
+            }
         }
     }
     return make_pair(false, make_pair(-1, -1));
