@@ -6,11 +6,11 @@ using namespace std;
 
 int main()
 {
-	GameController gc = GameController();
-	gc.gameLoop();
+	//GameController gc = GameController();
+	//gc.gameLoop();
 
-	//ExperimentController ec = ExperimentController();
-	//ec.gameLoop();
+	ExperimentController ec = ExperimentController();
+	ec.gameLoop();
 
 	return 0;
 

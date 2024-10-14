@@ -66,8 +66,8 @@ template <size_t N>
 pair<bool, pair<int, int>> Board::checkPattern(const int(&pattern)[N], int pattern_x_size, int pattern_y_size)
 {
     bool foundPattern{ true };
-    for (int i = 0; i < x_size - pattern_x_size; i++) {
-        for (int j = 0; j < y_size - pattern_y_size; j++) {
+    for (int i = 0; i <= x_size - pattern_x_size; i++) {
+        for (int j = 0; j <= y_size - pattern_y_size; j++) {
             foundPattern = true;
             for (int x = 0; x < pattern_x_size; x++) {
                 for (int y = 0; y < pattern_y_size; y++) {
@@ -88,7 +88,28 @@ pair<bool, pair<int, int>> Board::checkPattern(const int(&pattern)[N], int patte
                 }
             }
             if (foundPattern) {
-                return make_pair(true, make_pair(i, j));
+                bool validSurroundings = true;
+                for (int x = -1; x <= pattern_x_size; x++) {
+                    for (int y = -1; y <= pattern_y_size; y++) {
+                        int curX = i + x;
+                        int curY = j + y;
+                        if (x >= 0 && x < pattern_x_size && y >= 0 && y < pattern_y_size) {
+                            continue;
+                        }
+                        if (curX < 0 || curX >= x_size || curY < 0 || curY >= y_size) {
+                            continue;
+                        }
+                        int curIndex = getVectorIndex(curX, curY);
+                        if (grid[curIndex] != 0) {
+                            validSurroundings = false;
+                            break;
+                        }
+                    }
+                    if (!validSurroundings) break;
+                }
+                if (validSurroundings) {
+                    return make_pair(true, make_pair(i, j));
+                }
             }
         }
     }
