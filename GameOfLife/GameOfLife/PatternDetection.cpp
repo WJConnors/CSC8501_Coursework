@@ -11,7 +11,7 @@ void Board::checkStaticPatterns()
 
 void Board::checkOscillators()
 {
-    //foundBlinker = checkOscillator(blinker1, blinker2, blinker_size, bc);
+    foundBlinker = checkOscillator(blinker1, blinker2, blinker_size, bc);
     bool foundToad1 = checkOscillator(toad1_1, toad1_2, toad_size, tc1);
     bool foundToad2 = checkOscillator(toad2_1, toad2_2, toad_size, tc2);
     if (foundToad1 || foundToad2) foundToad = true;

@@ -4,9 +4,14 @@ using namespace std;
 
 void ExperimentController::gameLoop()
 {
+	cout << "Input board x size, y size, and number of starting alive cells:" << endl;
+	int x, y, a;
+	cin >> x;
+	cin >> y;
+	cin >> a;
 	bool experiment{ true };
 	while (experiment) {
-		board = new Board(25);
+		board = new Board(x, y, a);
 		experimentCounter++;
 
 		while (true){

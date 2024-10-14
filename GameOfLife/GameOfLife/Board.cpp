@@ -132,7 +132,7 @@ void Board::updateBoard()
     }
     storedGrids.push_back(grid);
     stepsTaken++;
-    //checkStaticPatterns();
+    checkStaticPatterns();
     checkOscillators();
 }
 
