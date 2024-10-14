@@ -41,7 +41,7 @@ void GameController::gameLoop()
 
             switch (in) {
             case 1:
-                board->updateBoard();
+                ++*board;
                 displayBoard();
                 if (board->get_foundBlock() || board->get_foundBeehive()) {
                     cout << "A static pattern has been found" << endl;

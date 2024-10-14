@@ -52,7 +52,7 @@ private:
 
 	void initializeGrid(int a);
 
-	void updateBoard();
+	void operator++();
 
 	void saveBoard(string fpath) const;
 	void saveOriginalBoard(string fpath) const;

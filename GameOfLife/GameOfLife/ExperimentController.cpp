@@ -15,7 +15,7 @@ void ExperimentController::gameLoop()
 		experimentCounter++;
 
 		while (true){
-			board->updateBoard();
+			++*board;
 
 			if (board->get_foundBlock() || board->get_foundBeehive()) {
 				experiment = false;

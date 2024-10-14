@@ -102,7 +102,7 @@ int Board::countAliveNeighbors(int x, int y) const
     return alive_neighbors;
 }
 
-void Board::updateBoard()
+void Board::operator++()
 {
     vector<int> newGrid = grid;
     for (int i = 0; i < x_size; i++) {

@@ -6,7 +6,6 @@ class GameController
 public:
 	virtual void gameLoop();
 
-	virtual ~GameController() = default;
 protected:
 	Board* board;
 
