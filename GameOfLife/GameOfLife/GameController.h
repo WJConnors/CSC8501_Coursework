@@ -12,7 +12,9 @@ protected:
 
 	void createBoard();
 	void displayBoard() const;
+	void displayBoard(vector<int> board ,int steps) const;
 	void displayBoard(vector<int> grid) const;
 	void displayOriginalBoard() const;
+	void displayAllBoards() const;
 	void simInterrupt() const;
 };

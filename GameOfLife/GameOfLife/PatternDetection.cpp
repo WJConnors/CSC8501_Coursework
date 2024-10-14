@@ -4,14 +4,14 @@ using namespace Patterns;
 
 void Board::checkStaticPatterns()
 {
-    foundBlock = checkPattern(block, block_x_size, block_y_size).first;
-    foundBeehive = checkPattern(beehive1, beehive1_x_size, beehive1_y_size).first;
-    foundBeehive = checkPattern(beehive2, beehive2_x_size, beehive2_y_size).first;
+    //foundBlock = checkPattern(block, block_x_size, block_y_size).first;
+    //foundBeehive = checkPattern(beehive1, beehive1_x_size, beehive1_y_size).first;
+    //foundBeehive = checkPattern(beehive2, beehive2_x_size, beehive2_y_size).first;
 }
 
 void Board::checkOscillators()
 {
-    foundBlinker = checkOscillator(blinker1, blinker2, blinker_size, bc);
+    //foundBlinker = checkOscillator(blinker1, blinker2, blinker_size, bc);
     bool foundToad1 = checkOscillator(toad1_1, toad1_2, toad_size, tc1);
     bool foundToad2 = checkOscillator(toad2_1, toad2_2, toad_size, tc2);
     if (foundToad1 || foundToad2) foundToad = true;

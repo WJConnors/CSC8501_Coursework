@@ -23,6 +23,7 @@ public:
 	bool get_foundBeehive() const { return foundBeehive; }
 	bool get_foundBlinker() const { return foundBlinker; }
 	bool get_foundToad() const { return foundToad; }
+	vector<vector<int>> get_allBoards() const { return storedGrids; }
 	vector<int> get_grid() const { return grid; }
 	vector<int> get_originalGrid() const { return originalGrid; }
 

@@ -89,10 +89,25 @@ void GameController::displayBoard() const
     displayBoard(board->get_grid());
 }
 
+void GameController::displayBoard(vector<int> board, int steps) const
+{
+    cout << "This is the board after " << steps << " turns" << endl;
+    displayBoard(board);
+}
+
 void GameController::displayOriginalBoard() const
 {
     cout << "This is the original board" << endl;
     displayBoard(board->get_originalGrid());
+}
+
+void GameController::displayAllBoards() const
+{
+    auto boards{ board->get_allBoards() };
+    int steps = 1;
+    for (auto& board : boards) {
+        displayBoard(board, steps++);
+    }
 }
 
 void GameController::displayBoard(vector<int> grid) const
@@ -116,20 +131,27 @@ void GameController::displayBoard(vector<int> grid) const
 
 void GameController::simInterrupt() const
 {
-    cout << "The simulation has concluded. Choose an option" << endl;
-    cout << "1. Save the current board" << endl;
-    cout << "2. Save the original board" << endl;
-    cout << "3. Discard the current board" << endl;
-    int in;
-    cin >> in;
+    int in{ 0 };
+    while (in != 4) {
+        cout << "The simulation has concluded. Choose an option" << endl;
+        cout << "1. Save the current board" << endl;
+        cout << "2. Save the original board" << endl;
+        cout << "3. View every step from the beginning" << endl;
+        cout << "4. Discard the current board" << endl;
+        int in;
+        cin >> in;
 
-    switch (in)
-    {
-    case 1:
-        board->saveBoard("test.txt");
-        break;
-    case 2:
-        board->saveOriginalBoard("test.txt");
-        break;
+        switch (in)
+        {
+        case 1:
+            board->saveBoard("test.txt");
+            break;
+        case 2:
+            board->saveOriginalBoard("test.txt");
+            break;
+        case 3:
+            displayAllBoards();
+            break;
+        }
     }
 }

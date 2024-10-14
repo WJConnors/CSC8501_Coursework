@@ -40,6 +40,6 @@ void ExperimentController::gameLoop()
 	}
 	
 	
-	displayBoard();
+	displayAllBoards();
 
 }
