@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include <array>
+#include "Patterns.h"
 
 using namespace std;
 
@@ -21,6 +21,7 @@ public:
 	bool get_ended() const { return ended; }
 	bool get_foundBlock() const { return foundBlock; }
 	bool get_foundBeehive() const { return foundBeehive; }
+	bool get_foundBlinker() const { return foundBlinker; }
 	vector<int> get_grid() const { return grid; }
 	vector<int> get_originalGrid() const { return originalGrid; }
 
@@ -35,6 +36,14 @@ private:
 	bool ended{ false };
 	bool foundBlock{ false };
 	bool foundBeehive{ false };
+	bool foundBlinker{ false };
+
+	struct BlinkerCheck {
+		int versionFound{ 0 }; //0 for nothing found, 1 for variation 1, 2 for variation 2
+		int x{ -1 };
+		int y{ -1 };
+	};
+	BlinkerCheck bc;
 
 	void initializeGrid(int a);
 
@@ -49,7 +58,9 @@ private:
 
 	void checkStaticPatterns();
 	template <size_t N>
-	bool checkPattern(const int(&pattern)[N], int pattern_x_size, int pattern_y_size);
+	pair<bool, pair<int, int>> checkPattern(const int(&pattern)[N], int pattern_x_size, int pattern_y_size);
+
+	void checkOscillators();
 
 	static const int default_x = 30;
 	static const int default_y = 30;
@@ -57,37 +68,4 @@ private:
 
 	friend class GameController;
 	friend class ExperimentController;
-
-	// ================= Patterns =================
-
-	int block_x_size{ 4 };
-	int block_y_size{ 4 };
-	int block[16]{
-	0,0,0,0,
-	0,1,1,0,
-	0,1,1,0,
-	0,0,0,0
-	};
-
-	int beehive_x_size = 5;
-	int beehive_y_size = 6;
-	int beehive[30]{
-	 0,0,0,0,0,0,
-	 0,0,1,1,0,0,
-	 0,1,0,0,1,0,
-	 0,0,1,1,0,0,
-	 0,0,0,0,0,0
-	};
-
-	int rotated_beehive_x_size = 6;
-	int rotated_beehive_y_size = 5;
-	int rotatedBeeHive[30]{
-		0,0,0,0,0,
-		0,0,1,0,0,
-		0,1,0,1,0,
-		0,1,0,1,0,
-		0,0,1,0,0,
-		0,0,0,0,0
-	};
-
 };

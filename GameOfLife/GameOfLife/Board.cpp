@@ -132,7 +132,8 @@ void Board::updateBoard()
     }
     storedGrids.push_back(grid);
     stepsTaken++;
-    checkStaticPatterns();
+    //checkStaticPatterns();
+    checkOscillators();
 }
 
 void Board::saveBoard(string fpath) const { saver(fpath, false); }

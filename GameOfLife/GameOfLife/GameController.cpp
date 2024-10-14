@@ -44,7 +44,10 @@ void GameController::gameLoop()
                 board->updateBoard();
                 displayBoard();
                 if (board->get_foundBlock() || board->get_foundBeehive()) {
-                    cout << "A pattern has been found" << endl;
+                    cout << "A static pattern has been found" << endl;
+                }
+                if (board->get_foundBlinker()) {
+                    cout << " An oscillator has been found" << endl;
                 }
                 break;
             case 2:
