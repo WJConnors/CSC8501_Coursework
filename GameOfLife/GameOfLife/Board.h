@@ -22,6 +22,7 @@ public:
 	bool get_foundBlock() const { return foundBlock; }
 	bool get_foundBeehive() const { return foundBeehive; }
 	bool get_foundBlinker() const { return foundBlinker; }
+	bool get_foundToad() const { return foundToad; }
 	vector<int> get_grid() const { return grid; }
 	vector<int> get_originalGrid() const { return originalGrid; }
 
@@ -37,13 +38,16 @@ private:
 	bool foundBlock{ false };
 	bool foundBeehive{ false };
 	bool foundBlinker{ false };
+	bool foundToad{ false };
 
-	struct BlinkerCheck {
+	struct OscCheck {
 		int versionFound{ 0 }; //0 for nothing found, 1 for variation 1, 2 for variation 2
 		int x{ -1 };
 		int y{ -1 };
 	};
-	BlinkerCheck bc;
+	OscCheck bc;
+	OscCheck tc1;
+	OscCheck tc2;
 
 	void initializeGrid(int a);
 
@@ -61,6 +65,8 @@ private:
 	pair<bool, pair<int, int>> checkPattern(const int(&pattern)[N], int pattern_x_size, int pattern_y_size);
 
 	void checkOscillators();
+	template <size_t N>
+	bool checkOscillator(const int(&pattern1)[N], const int(&pattern2)[N], int pattern_size, OscCheck& oc);
 
 	static const int default_x = 30;
 	static const int default_y = 30;

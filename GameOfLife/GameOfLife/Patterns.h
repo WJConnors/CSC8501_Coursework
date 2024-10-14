@@ -13,9 +13,9 @@ namespace Patterns
 	0,0,0,0
 	};
 
-	constexpr int beehive_x_size = 5;
-	constexpr int beehive_y_size = 6;
-	constexpr int beehive[30]{
+	constexpr int beehive1_x_size{ 5 };
+	constexpr int beehive1_y_size{ 6 };
+	constexpr int beehive1[30]{
 	 0,0,0,0,0,0,
 	 0,0,1,1,0,0,
 	 0,1,0,0,1,0,
@@ -23,9 +23,9 @@ namespace Patterns
 	 0,0,0,0,0,0
 	};
 
-	constexpr int rotated_beehive_x_size = 6;
-	constexpr int rotated_beehive_y_size = 5;
-	constexpr int rotatedBeeHive[30]{
+	constexpr int beehive2_x_size{ 6 };
+	constexpr int beehive2_y_size{ 5 };
+	constexpr int beehive2[30]{
 		0,0,0,0,0,
 		0,0,1,0,0,
 		0,1,0,1,0,
@@ -35,8 +35,7 @@ namespace Patterns
 	};
 
 	//============Oscillators===================
-	constexpr int blinker_x_size = 5;
-	constexpr int blinker_y_size = 5;
+	constexpr int blinker_size{ 5 };
 	constexpr int blinker1[25]{
 		0,0,0,0,0,
 		0,0,0,0,0,
@@ -51,6 +50,43 @@ namespace Patterns
 		0,0,1,0,0,
 		0,0,1,0,0,
 		0,0,0,0,0
+	};
+
+	constexpr int toad_size{ 6 };
+	constexpr int toad1_1[36]{
+		0,0,0,0,0,0,
+		0,0,0,0,0,0,
+		0,0,1,1,1,0,
+		0,1,1,1,0,0,
+		0,0,0,0,0,0,
+		0,0,0,0,0,0
+	};
+
+	constexpr int toad1_2[36]{
+		0,0,0,0,0,0,
+		0,0,0,1,0,0,
+		0,1,0,0,1,0,
+		0,1,0,0,1,0,
+		0,0,1,0,0,0,
+		0,0,0,0,0,0
+	};
+
+	constexpr int toad2_1[36]{
+		0,0,0,0,0,0,
+		0,0,1,0,0,0,
+		0,0,1,1,0,0,
+		0,0,1,1,0,0,
+		0,0,0,1,0,0,
+		0,0,0,0,0,0
+	};
+
+	constexpr int toad2_2[36]{
+		0,0,0,0,0,0,
+		0,0,1,1,0,0,
+		0,1,0,0,0,0,
+		0,0,0,0,1,0,
+		0,0,1,1,0,0,
+		0,0,0,0,0,0
 	};
 
 }

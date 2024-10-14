@@ -46,7 +46,7 @@ void GameController::gameLoop()
                 if (board->get_foundBlock() || board->get_foundBeehive()) {
                     cout << "A static pattern has been found" << endl;
                 }
-                if (board->get_foundBlinker()) {
+                if (board->get_foundBlinker() || board->get_foundToad()) {
                     cout << " An oscillator has been found" << endl;
                 }
                 break;

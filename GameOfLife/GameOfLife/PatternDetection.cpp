@@ -5,50 +5,61 @@ using namespace Patterns;
 void Board::checkStaticPatterns()
 {
     foundBlock = checkPattern(block, block_x_size, block_y_size).first;
-    foundBeehive = checkPattern(beehive, beehive_x_size, beehive_y_size).first;
-    foundBeehive = checkPattern(rotatedBeeHive, rotated_beehive_x_size, rotated_beehive_y_size).first;
+    foundBeehive = checkPattern(beehive1, beehive1_x_size, beehive1_y_size).first;
+    foundBeehive = checkPattern(beehive2, beehive2_x_size, beehive2_y_size).first;
 }
 
 void Board::checkOscillators()
 {
-    switch (bc.versionFound) {
+    //foundBlinker = checkOscillator(blinker1, blinker2, blinker_size, bc);
+    bool foundToad1 = checkOscillator(toad1_1, toad1_2, toad_size, tc1);
+    bool foundToad2 = checkOscillator(toad2_1, toad2_2, toad_size, tc2);
+    if (foundToad1 || foundToad2) foundToad = true;
+}
+
+template <size_t N>
+bool Board::checkOscillator(const int(&pattern1)[N], const int(&pattern2)[N], int pattern_size, OscCheck& oc)
+{
+    switch (oc.versionFound) {
     case 0:
     {
-        auto result = checkPattern(blinker1, blinker_x_size, blinker_y_size);
+        auto result = checkPattern(pattern1, pattern_size, pattern_size);
         if (result.first) {
-            bc.versionFound = 1;
-            bc.x = result.second.first;
-            bc.y = result.second.second;
+            oc.versionFound = 1;
+            oc.x = result.second.first;
+            oc.y = result.second.second;
         }
         else {
-            result = checkPattern(blinker2, blinker_x_size, blinker_y_size);
+            result = checkPattern(pattern2, pattern_size, pattern_size);
             if (result.first) {
-                bc.versionFound = 2;
-                bc.x = result.second.first;
-                bc.y = result.second.second;
+                oc.versionFound = 2;
+                oc.x = result.second.first;
+                oc.y = result.second.second;
             }
         }
         break;
     }
     case 1:
     {
-        auto result = checkPattern(blinker2, blinker_x_size, blinker_y_size);
-        if (result.first && result.second.first == bc.x && result.second.second == bc.y) {
-            foundBlinker = true;
-            bc.versionFound = 2;
+        auto result = checkPattern(pattern2, pattern_size, pattern_size);
+        if (result.first && result.second.first == oc.x && result.second.second == oc.y) {
+            oc.versionFound = 2;
+            return true;
+            
         }
         break;
     }
     case 2:
     {
-        auto result = checkPattern(blinker1, blinker_x_size, blinker_y_size);
-        if (result.first && result.second.first == bc.x && result.second.second == bc.y) {
-            foundBlinker = true;
-            bc.versionFound = 1;
+        auto result = checkPattern(pattern1, pattern_size, pattern_size);
+        if (result.first && result.second.first == oc.x && result.second.second == oc.y) {
+            oc.versionFound = 1;
+            return true;
         }
         break;
     }
     }
+    return false;
 }
 
 template <size_t N>

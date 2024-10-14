@@ -6,7 +6,7 @@ void ExperimentController::gameLoop()
 {
 	bool experiment{ true };
 	while (experiment) {
-		board = new Board();
+		board = new Board(25);
 		experimentCounter++;
 
 		while (true){
@@ -18,7 +18,7 @@ void ExperimentController::gameLoop()
 				break;
 			}
 
-			if (board->get_foundBlinker()) {
+			if (board->get_foundBlinker() || board->get_foundToad()) {
 				experiment = false;
 				cout << "An oscillator has been found during experiment " << experimentCounter << endl;
 				break;
