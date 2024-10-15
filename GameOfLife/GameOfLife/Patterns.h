@@ -1,6 +1,8 @@
 #pragma once
 #include <array>
 
+using namespace std;
+
 namespace Patterns
 {
 	//============Still Lifes===================
@@ -69,6 +71,38 @@ namespace Patterns
 		1,0,0,0,
 		0,0,0,1,
 		0,1,1,0
+	};
+
+	//============Spaceships===================
+	constexpr int glider_size{ 3 };
+	constexpr pair<int, int> glider1Move[4]{
+		{1,0}, {0,0}, {0,1}, {0,0}
+	};
+	constexpr int glider1_1[9]{
+		0,1,0,
+		0,0,1,
+		1,1,1
+	};
+	constexpr int glider1_2[9]{
+		1,0,1,
+		0,1,1,
+		0,1,0
+	};
+	constexpr int glider1_3[9]{
+		0,0,1,
+		1,0,1,
+		0,1,1
+	};
+	constexpr int glider1_4[9]{
+		1,0,0,
+		0,1,1,
+		1,1,0
+	};
+	constexpr const int* gliders1[4] = {
+		glider1_1,
+		glider1_2,
+		glider1_3,
+		glider1_4
 	};
 
 }

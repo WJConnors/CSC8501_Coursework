@@ -17,6 +17,11 @@ void Board::checkOscillators()
     if (foundToad1 || foundToad2) foundToad = true;
 }
 
+void Board::checkSpaceShips()
+{
+
+}
+
 template <size_t N>
 bool Board::checkOscillator(const int(&pattern1)[N], const int(&pattern2)[N], int pattern_size, OscCheck& oc)
 {
@@ -59,6 +64,11 @@ bool Board::checkOscillator(const int(&pattern1)[N], const int(&pattern2)[N], in
         break;
     }
     }
+    return false;
+}
+
+bool Board::checkSpaceShip(const int* patterns[4], int pattern_x_size, int pattern_y_size, SpaceShipCheck sc)
+{
     return false;
 }
 

@@ -50,6 +50,14 @@ private:
 	OscCheck tc1;
 	OscCheck tc2;
 
+	struct SpaceShipCheck {
+		int versionFound{ -1 };
+		int stepCount{ 0 };
+		int x{ -1 };
+		int y{ -1 };
+	};
+	SpaceShipCheck gc1;
+
 	void initializeGrid(int a);
 
 	void operator++();
@@ -68,6 +76,9 @@ private:
 	void checkOscillators();
 	template <size_t N>
 	bool checkOscillator(const int(&pattern1)[N], const int(&pattern2)[N], int pattern_size, OscCheck& oc);
+
+	void checkSpaceShips();
+	bool checkSpaceShip(const int* patterns[4], int pattern_x_size, int pattern_y_size, SpaceShipCheck sc);
 
 	static const int default_x = 30;
 	static const int default_y = 30;
