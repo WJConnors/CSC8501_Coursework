@@ -26,6 +26,12 @@ public:
 	bool get_foundToad() const { return foundToad; }
 	bool get_foundGlider() const { return foundGlider; }
 	bool get_foundLWSS() const { return foundLWSS; }
+	void set_foundBlock(bool b) { foundBlock = b; }
+	void set_foundBeehive(bool b) { foundBeehive = b; }
+	void set_foundBlinker(bool b) { foundBlinker = b; }
+	void set_foundToad(bool b) { foundToad = b; }
+	void set_foundGlider(bool b) { foundLWSS = b; }
+	void set_foundLWSS(bool b) { foundLWSS = b; }
 	vector<vector<int>> get_allBoards() const { return storedGrids; }
 	vector<int> get_grid() const { return grid; }
 	vector<int> get_originalGrid() const { return originalGrid; }

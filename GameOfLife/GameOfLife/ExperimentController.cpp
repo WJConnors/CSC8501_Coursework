@@ -90,11 +90,20 @@ void ExperimentController::findLowestERN() {
 		cout << i << endl;
 		board = new Board(distrib(gen));
 		int curERN = board->getERN();
+
+		if (curERN > blockERN && curERN > beehiveERN && curERN > blinkerERN && curERN > toadERN && curERN > gliderERN && curERN > scERN) {
+			delete(board);
+			continue;
+		}
+		if (curERN > blockERN) board->set_foundBlock(true);
+		if (curERN > beehiveERN) board->set_foundBeehive(true);
+		if (curERN > blinkerERN) board->set_foundBlinker(true);
+		if (curERN > toadERN) board->set_foundToad(true);
+		if (curERN > gliderERN) board->set_foundGlider(true);
+		if (curERN > scERN) board->set_foundLWSS(true);
+
 		while (true) {
-			if (curERN > blockERN && curERN > beehiveERN && curERN > blinkerERN && curERN > toadERN && curERN > gliderERN && curERN > scERN) {
-				delete(board);
-				break;
-			}
+
 
 			if (board->get_foundBlock()) { if (curERN < blockERN) blockERN = curERN; }
 			if (board->get_foundBeehive()) { if (curERN < beehiveERN) beehiveERN = curERN; }

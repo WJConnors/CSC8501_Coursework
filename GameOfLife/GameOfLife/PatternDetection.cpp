@@ -8,8 +8,9 @@ void Board::checkStaticPatterns()
         foundBlock = checkPattern(block, block_x_size, block_y_size).first;
     }
     if (!foundBeehive) {
-        foundBeehive = checkPattern(beehive1, beehive1_x_size, beehive1_y_size).first;
-        foundBeehive = checkPattern(beehive2, beehive2_x_size, beehive2_y_size).first;
+        foundBeehive =
+            checkPattern(beehive1, beehive1_x_size, beehive1_y_size).first ||
+            checkPattern(beehive2, beehive2_x_size, beehive2_y_size).first;
     }
     
 }
@@ -20,9 +21,9 @@ void Board::checkOscillators()
         foundBlinker = checkOscillator(blinker1, blinker2, blinker_size, bc);
     }
     if (!foundToad) {
-        bool foundToad1 = checkOscillator(toad1_1, toad1_2, toad_size, tc1);
-        bool foundToad2 = checkOscillator(toad2_1, toad2_2, toad_size, tc2);
-        if (foundToad1 || foundToad2) foundToad = true;
+        foundToad = 
+            checkOscillator(toad1_1, toad1_2, toad_size, tc1) ||
+            checkOscillator(toad2_1, toad2_2, toad_size, tc2);
     }
     
 }
@@ -30,18 +31,18 @@ void Board::checkOscillators()
 void Board::checkSpaceShips()
 {
     if (!foundGlider) {
-        bool foundGlider1 = checkSpaceShip(gliders1, glider_size, glider_size, gc1, glider1Move);
-        bool foundGlider2 = checkSpaceShip(gliders2, glider_size, glider_size, gc2, glider2Move);
-        bool foundGlider3 = checkSpaceShip(gliders3, glider_size, glider_size, gc3, glider3Move);
-        bool foundGlider4 = checkSpaceShip(gliders4, glider_size, glider_size, gc4, glider4Move);
-        if (foundGlider1 || foundGlider2 || foundGlider3 || foundGlider4) foundGlider = true;
+        foundGlider = 
+            checkSpaceShip(gliders1, glider_size, glider_size, gc1, glider1Move) ||
+            checkSpaceShip(gliders2, glider_size, glider_size, gc2, glider2Move) ||
+            checkSpaceShip(gliders3, glider_size, glider_size, gc3, glider3Move) ||
+            checkSpaceShip(gliders4, glider_size, glider_size, gc4, glider4Move);
     }
     if (!foundLWSS) {
-        bool foundSc1 = checkSpaceShip(scs1, sc1_x_size, sc1_y_size, lwss1, sc1Move);
-        bool foundSc2 = checkSpaceShip(scs2, sc2_x_size, sc2_y_size, lwss2, sc2Move);
-        bool foundSc3 = checkSpaceShip(scs3, sc3_x_size, sc3_y_size, lwss3, sc3Move);
-        bool foundSc4 = checkSpaceShip(scs4, sc4_x_size, sc4_y_size, lwss4, sc4Move);
-        if (foundSc1 || foundSc2 || foundSc3 || foundSc4) foundLWSS = true;
+        foundLWSS =
+            checkSpaceShip(scs1, sc1_x_size, sc1_y_size, lwss1, sc1Move) ||
+            checkSpaceShip(scs2, sc2_x_size, sc2_y_size, lwss2, sc2Move) ||
+            checkSpaceShip(scs3, sc3_x_size, sc3_y_size, lwss3, sc3Move) ||
+            checkSpaceShip(scs4, sc4_x_size, sc4_y_size, lwss4, sc4Move);
     }
 }
 
@@ -149,6 +150,7 @@ pair<bool, pair<int, int>> Board::checkPattern(const int* pattern, int pattern_x
                         break;
                     }
                 }
+                if (!foundPattern) break;
             }
             if (foundPattern) {
                 bool validSurroundings = true;
@@ -171,10 +173,10 @@ pair<bool, pair<int, int>> Board::checkPattern(const int* pattern, int pattern_x
                     if (!validSurroundings) break;
                 }
                 if (validSurroundings) {
-                    return make_pair(true, make_pair(i, j));
+                    return { true, {i, j} };
                 }
             }
         }
     }
-    return make_pair(false, make_pair(-1, -1));
+    return { false, {-1, -1} };
 }
