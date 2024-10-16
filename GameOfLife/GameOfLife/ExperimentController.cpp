@@ -107,7 +107,8 @@ void ExperimentController::boardHandler()
 {
 	random_device rd;
 	mt19937 gen(rd());
-	uniform_int_distribution<> distrib(25, 900);
+	uniform_int_distribution<> numAlive(25, 900);
+	//uniform_int_distribution<> distribXY(30, 50);
 	Board* board;
 	while (true) {
 		if (n.fetch_add(1) >= numExperiments) {
@@ -121,7 +122,8 @@ void ExperimentController::boardHandler()
 		int tempGlider = gliderERN;
 		int tempSC = scERN;
 
-		board = new Board(distrib(gen));
+		//board = new Board(distribXY(gen), distribXY(gen), numAlive(gen));
+		board = new Board(numAlive(gen));
 		int curERN = board->getERN();
 
 		if (curERN > blockERN && curERN > beehiveERN && curERN > blinkerERN && curERN > toadERN && curERN > gliderERN && curERN > scERN) {
