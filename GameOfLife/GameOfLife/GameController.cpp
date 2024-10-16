@@ -26,7 +26,7 @@ void GameController::createBoard()
 void GameController::gameLoop()
 {
     createBoard();
-
+    checkPattern();
     bool loop{ true };
     int in;
     while (loop) {
@@ -43,12 +43,7 @@ void GameController::gameLoop()
             case 1:
                 ++*board;
                 displayBoard();
-                if (board->get_foundBlock() || board->get_foundBeehive()) {
-                    cout << "A static pattern has been found" << endl;
-                }
-                if (board->get_foundBlinker() || board->get_foundToad()) {
-                    cout << " An oscillator has been found" << endl;
-                }
+                checkPattern();
                 break;
             case 2:
                 sim = false;
@@ -153,5 +148,18 @@ void GameController::simInterrupt() const
             displayAllBoards();
             break;
         }
+    }
+}
+
+void GameController::checkPattern() const
+{
+    if (board->get_foundBlock() || board->get_foundBeehive()) {
+        cout << "A static pattern has been found" << endl;
+    }
+    if (board->get_foundBlinker() || board->get_foundToad()) {
+        cout << " An oscillator has been found" << endl;
+    }
+    if (board->get_foundGlider() || board->foundLWSS) {
+        cout << "A spaceship has been found during experiment " << endl;
     }
 }

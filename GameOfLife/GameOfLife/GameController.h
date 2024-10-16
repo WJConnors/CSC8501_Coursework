@@ -16,4 +16,5 @@ protected:
 	void displayOriginalBoard() const;
 	void displayAllBoards() const;
 	void simInterrupt() const;
+	void checkPattern() const;
 };

@@ -53,6 +53,10 @@ Board::Board(string fpath)
     }
 
     originalGrid = grid;
+
+    checkStaticPatterns();
+    checkOscillators();
+    checkSpaceShips();
 }
 
 void Board::initializeGrid(int a)
@@ -74,6 +78,10 @@ void Board::initializeGrid(int a)
     }
     originalGrid = grid;
     storedGrids.push_back(grid);
+
+    checkStaticPatterns();
+    checkOscillators();
+    checkSpaceShips();
 }
 
 int Board::getVectorIndex(int x, int y) const
@@ -134,6 +142,7 @@ void Board::operator++()
     stepsTaken++;
     checkStaticPatterns();
     checkOscillators();
+    checkSpaceShips();
 }
 
 void Board::saveBoard(string fpath) const { saver(fpath, false); }

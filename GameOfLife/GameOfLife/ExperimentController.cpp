@@ -15,7 +15,6 @@ void ExperimentController::gameLoop()
 		experimentCounter++;
 
 		while (true){
-			++*board;
 
 			if (board->get_foundBlock() || board->get_foundBeehive()) {
 				experiment = false;
@@ -29,9 +28,17 @@ void ExperimentController::gameLoop()
 				break;
 			}
 
-			if (board->get_ended()) {
+			if (board->get_foundGlider() || board->foundLWSS) {
+				experiment = false;
+				cout << "A spaceship has been found during experiment " << experimentCounter << endl;
 				break;
 			}
+
+			if (board->get_ended() || board->foundLWSS) {
+				break;
+			}
+
+			++ * board;
 		}
 
 		if (experiment) {

@@ -23,6 +23,8 @@ public:
 	bool get_foundBeehive() const { return foundBeehive; }
 	bool get_foundBlinker() const { return foundBlinker; }
 	bool get_foundToad() const { return foundToad; }
+	bool get_foundGlider() const { return foundGlider; }
+	bool get_foundLWSS() const { return foundLWSS; }
 	vector<vector<int>> get_allBoards() const { return storedGrids; }
 	vector<int> get_grid() const { return grid; }
 	vector<int> get_originalGrid() const { return originalGrid; }
@@ -40,6 +42,8 @@ private:
 	bool foundBeehive{ false };
 	bool foundBlinker{ false };
 	bool foundToad{ false };
+	bool foundGlider{ false };
+	bool foundLWSS{ false };
 
 	struct OscCheck {
 		int versionFound{ 0 }; //0 for nothing found, 1 for variation 1, 2 for variation 2
@@ -57,6 +61,14 @@ private:
 		int y{ -1 };
 	};
 	SpaceShipCheck gc1;
+	SpaceShipCheck gc2;
+	SpaceShipCheck gc3;
+	SpaceShipCheck gc4;
+
+	SpaceShipCheck lwss1;
+	SpaceShipCheck lwss2;
+	SpaceShipCheck lwss3;
+	SpaceShipCheck lwss4;
 
 	void initializeGrid(int a);
 
@@ -70,15 +82,14 @@ private:
 	int countAliveNeighbors(int x, int y) const;
 
 	void checkStaticPatterns();
-	template <size_t N>
-	pair<bool, pair<int, int>> checkPattern(const int(&pattern)[N], int pattern_x_size, int pattern_y_size);
+	pair<bool, pair<int, int>> checkPattern(const int* pattern, int pattern_x_size, int pattern_y_size);
 
 	void checkOscillators();
 	template <size_t N>
 	bool checkOscillator(const int(&pattern1)[N], const int(&pattern2)[N], int pattern_size, OscCheck& oc);
 
 	void checkSpaceShips();
-	bool checkSpaceShip(const int* patterns[4], int pattern_x_size, int pattern_y_size, SpaceShipCheck sc);
+	bool checkSpaceShip(const int* const patterns[4], int pattern_x_size, int pattern_y_size, SpaceShipCheck& sc, const pair<int, int> scMovement[4]);
 
 	static const int default_x = 30;
 	static const int default_y = 30;

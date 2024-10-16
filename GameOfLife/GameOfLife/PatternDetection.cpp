@@ -4,22 +4,36 @@ using namespace Patterns;
 
 void Board::checkStaticPatterns()
 {
+    /*
     foundBlock = checkPattern(block, block_x_size, block_y_size).first;
     foundBeehive = checkPattern(beehive1, beehive1_x_size, beehive1_y_size).first;
     foundBeehive = checkPattern(beehive2, beehive2_x_size, beehive2_y_size).first;
+    */
 }
 
 void Board::checkOscillators()
 {
+    /*
     foundBlinker = checkOscillator(blinker1, blinker2, blinker_size, bc);
     bool foundToad1 = checkOscillator(toad1_1, toad1_2, toad_size, tc1);
     bool foundToad2 = checkOscillator(toad2_1, toad2_2, toad_size, tc2);
     if (foundToad1 || foundToad2) foundToad = true;
+    */
 }
 
 void Board::checkSpaceShips()
 {
+    bool foundGlider1 = checkSpaceShip(gliders1, glider_size, glider_size, gc1, glider1Move);
+    bool foundGlider2 = checkSpaceShip(gliders2, glider_size, glider_size, gc2, glider2Move);
+    bool foundGlider3 = checkSpaceShip(gliders3, glider_size, glider_size, gc3, glider3Move);
+    bool foundGlider4 = checkSpaceShip(gliders4, glider_size, glider_size, gc4, glider4Move);
+    //if (foundGlider1 || foundGlider2 || foundGlider3 || foundGlider4) foundGlider = true;
 
+    bool foundSc1 = checkSpaceShip(scs1, sc1_x_size, sc1_y_size, lwss1, sc1Move);
+    bool foundSc2 = checkSpaceShip(scs2, sc2_x_size, sc2_y_size, lwss2, sc2Move);
+    bool foundSc3 = checkSpaceShip(scs3, sc3_x_size, sc3_y_size, lwss3, sc3Move);
+    bool foundSc4 = checkSpaceShip(scs4, sc4_x_size, sc4_y_size, lwss4, sc4Move);
+    if (foundSc1 || foundSc2 || foundSc3 || foundSc4) foundLWSS = true;
 }
 
 template <size_t N>
@@ -67,13 +81,43 @@ bool Board::checkOscillator(const int(&pattern1)[N], const int(&pattern2)[N], in
     return false;
 }
 
-bool Board::checkSpaceShip(const int* patterns[4], int pattern_x_size, int pattern_y_size, SpaceShipCheck sc)
+bool Board::checkSpaceShip(const int* const patterns[4], int pattern_x_size, int pattern_y_size, SpaceShipCheck& sc, const pair<int, int> scMovement[4])
 {
+
+    if (sc.versionFound == -1) {
+        for (int i = 0; i < 4; i++) {
+            auto result = checkPattern(patterns[i], pattern_x_size, pattern_y_size);
+            if (result.first) {
+                sc.versionFound = i;
+                sc.stepCount = 1;
+                sc.x = result.second.first + scMovement[i].first;
+                sc.y = result.second.second + scMovement[i].second;
+                break;
+            }
+        }
+    }
+    else {
+        int expectedPatternIndex = sc.versionFound + 1;
+        if (expectedPatternIndex == 4) expectedPatternIndex = 0;
+        auto result = checkPattern(patterns[expectedPatternIndex], pattern_x_size, pattern_y_size);
+        if (result.first && result.second.first == sc.x && result.second.second == sc.y) {
+            sc.versionFound = expectedPatternIndex;
+            ++sc.stepCount;
+            sc.x += scMovement[expectedPatternIndex].first;
+            sc.y += scMovement[expectedPatternIndex].second;
+            if (sc.stepCount == 4) {
+                return true;
+            }
+        }
+        else {
+            sc.versionFound, sc.stepCount = 0;
+            sc.x, sc.y = -1;
+        }
+    }
     return false;
 }
 
-template <size_t N>
-pair<bool, pair<int, int>> Board::checkPattern(const int(&pattern)[N], int pattern_x_size, int pattern_y_size)
+pair<bool, pair<int, int>> Board::checkPattern(const int* pattern, int pattern_x_size, int pattern_y_size)
 {
     bool foundPattern{ true };
     for (int i = 0; i <= x_size - pattern_x_size; i++) {
