@@ -7,4 +7,7 @@ public:
 	void gameLoop() override;
 private:
 	int experimentCounter{ 0 };
+
+	void findPatternExperiment();
+	void findLowestERN();
 };
