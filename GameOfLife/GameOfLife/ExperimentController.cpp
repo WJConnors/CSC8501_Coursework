@@ -8,7 +8,7 @@ using namespace std;
 using std::cout;
 
 ExperimentController::ExperimentController() :
-	n (0) {}
+	n(0), numExperiments(1000) {}
 
 void ExperimentController::gameLoop()
 {
