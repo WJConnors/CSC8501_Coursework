@@ -71,23 +71,31 @@ void ExperimentController::findPatternExperiment()
 
 void ExperimentController::findLowestERN() {
 	cout << "Input the number of experiments to run:" << endl;
-	int n;
 	cin >> n;
-	random_device rd;
-	mt19937 gen(rd());
-	uniform_int_distribution<> distrib(25, 900);
-
-	int blockERN{ std::numeric_limits<int>::max() };
-	int beehiveERN{ std::numeric_limits<int>::max() };
-	int blinkerERN{ std::numeric_limits<int>::max() };
-	int toadERN{ std::numeric_limits<int>::max() };
-	int gliderERN{ std::numeric_limits<int>::max() };
-	int scERN{ std::numeric_limits<int>::max() };
 
 	auto start = chrono::high_resolution_clock::now();
 
+	boardHandler();
+
+	auto end = std::chrono::high_resolution_clock::now();
+
+	cout << "The lowest block ERN is " << blockERN << endl;
+	cout << "The lowest beehive ERN is " << beehiveERN << endl;
+	cout << "The lowest blinker ERN is " << blinkerERN << endl;
+	cout << "The lowest toad ERN is " << toadERN << endl;
+	cout << "The lowest glider ERN is " << gliderERN << endl;
+	cout << "The lowest LWSS ERN is " << scERN << endl;
+
+	auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
+	std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
+}
+
+void ExperimentController::boardHandler()
+{
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<> distrib(25, 900);
 	for (int i = 0; i < n; i++) {
-		cout << i << endl;
 		board = new Board(distrib(gen));
 		int curERN = board->getERN();
 
@@ -119,16 +127,4 @@ void ExperimentController::findLowestERN() {
 			++ * board;
 		}
 	}
-
-	auto end = std::chrono::high_resolution_clock::now();
-
-	cout << "The lowest block ERN is " << blockERN << endl;
-	cout << "The lowest beehive ERN is " << beehiveERN << endl;
-	cout << "The lowest blinker ERN is " << blinkerERN << endl;
-	cout << "The lowest toad ERN is " << toadERN << endl;
-	cout << "The lowest glider ERN is " << gliderERN << endl;
-	cout << "The lowest LWSS ERN is " << scERN << endl;
-
-	auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
-	std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
 }
