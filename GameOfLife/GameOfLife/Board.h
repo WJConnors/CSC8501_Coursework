@@ -16,6 +16,7 @@ public:
 
 	int get_x_size() const { return x_size; }
 	int get_y_size() const { return y_size; }
+	int getERN() const { return startingERN; }
 	int get_stepsTaken() const { return stepsTaken; }
 	int get_aliveCells() const { return aliveCells; }
 	bool get_ended() const { return ended; }
@@ -32,6 +33,7 @@ public:
 private:
 	int x_size{ default_x };
 	int y_size{ default_y };
+	int startingERN;
 	vector<int> grid;
 	vector<int> originalGrid;
 	vector<vector<int>> storedGrids{};
@@ -71,6 +73,7 @@ private:
 	SpaceShipCheck lwss4;
 
 	void initializeGrid(int a);
+	void calculateERN();
 
 	void operator++();
 

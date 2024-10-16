@@ -53,7 +53,7 @@ Board::Board(string fpath)
     }
 
     originalGrid = grid;
-
+    calculateERN();
     checkStaticPatterns();
     checkOscillators();
     checkSpaceShips();
@@ -78,7 +78,7 @@ void Board::initializeGrid(int a)
     }
     originalGrid = grid;
     storedGrids.push_back(grid);
-
+    calculateERN();
     checkStaticPatterns();
     checkOscillators();
     checkSpaceShips();
@@ -174,4 +174,9 @@ void Board::saver(string fpath, bool original) const
         }
     }
     fout.close();
+}
+
+void Board::calculateERN()
+{
+    startingERN = x_size + y_size + aliveCells;
 }
