@@ -9,8 +9,8 @@ int main()
 	//GameController gc = GameController();
 	//gc.gameLoop();
 
-	ExperimentController ec = ExperimentController();
-	ec.gameLoop();
+	ExperimentController* ec = new ExperimentController();
+	ec->gameLoop();
 
 	return 0;
 

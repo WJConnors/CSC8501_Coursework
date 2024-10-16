@@ -2,9 +2,13 @@
 #include <random>
 #include <limits>
 #include <chrono>
+#include <thread>
 #include "ExperimentController.h"
 using namespace std;
 using std::cout;
+
+ExperimentController::ExperimentController() :
+	n (0) {}
 
 void ExperimentController::gameLoop()
 {
@@ -71,11 +75,20 @@ void ExperimentController::findPatternExperiment()
 
 void ExperimentController::findLowestERN() {
 	cout << "Input the number of experiments to run:" << endl;
-	cin >> n;
+	cin >> numExperiments;	
+	int numThreads{ 8 };
 
 	auto start = chrono::high_resolution_clock::now();
 
-	boardHandler();
+	vector<thread> threads;
+
+	for (int i = 0; i < numThreads; i++) {
+		threads.push_back(thread(&ExperimentController::boardHandler, this));
+	}
+
+	for (auto& t : threads) {
+		t.join();
+	}
 
 	auto end = std::chrono::high_resolution_clock::now();
 
@@ -95,7 +108,19 @@ void ExperimentController::boardHandler()
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<> distrib(25, 900);
-	for (int i = 0; i < n; i++) {
+	Board* board;
+	while (true) {
+		if (n.fetch_add(1) >= numExperiments) {
+			break;
+		}
+
+		int tempBlock = blockERN;
+		int tempBeehive = beehiveERN;
+		int tempBlinker = blinkerERN;
+		int tempToad = toadERN;
+		int tempGlider = gliderERN;
+		int tempSC = scERN;
+
 		board = new Board(distrib(gen));
 		int curERN = board->getERN();
 
@@ -112,19 +137,28 @@ void ExperimentController::boardHandler()
 
 		while (true) {
 
-
-			if (board->get_foundBlock()) { if (curERN < blockERN) blockERN = curERN; }
-			if (board->get_foundBeehive()) { if (curERN < beehiveERN) beehiveERN = curERN; }
-			if (board->get_foundBlinker()) { if (curERN < blinkerERN) blinkerERN = curERN; }
-			if (board->get_foundToad()) { if (curERN < toadERN) toadERN = curERN; }
-			if (board->get_foundGlider()) { if (curERN < gliderERN) gliderERN = curERN; }
-			if (board->get_foundLWSS()) { if (curERN < scERN) scERN = curERN; }
+			if (board->get_foundBlock()) { if (curERN < tempBlock) tempBlock = curERN; }
+			if (board->get_foundBeehive()) { if (curERN < tempBeehive) tempBeehive = curERN; }
+			if (board->get_foundBlinker()) { if (curERN < tempBlinker) tempBlinker = curERN; }
+			if (board->get_foundToad()) { if (curERN < tempToad) tempToad = curERN; }
+			if (board->get_foundGlider()) { if (curERN < tempGlider) tempGlider = curERN; }
+			if (board->get_foundLWSS()) { if (curERN < tempSC) tempSC = curERN; }
 
 			if (board->get_ended()) {
 				delete(board);
 				break;
 			}
 			++ * board;
+		}
+
+		{
+			lock_guard<mutex> lock(mtx);
+			if (tempBlock < blockERN) blockERN = tempBlock;
+			if (tempBeehive < beehiveERN) beehiveERN = tempBeehive;
+			if (tempBlinker < blinkerERN) blinkerERN = tempBlinker;
+			if (tempToad < toadERN) toadERN = tempToad;
+			if (tempGlider < gliderERN) gliderERN = tempGlider;
+			if (tempSC < scERN) scERN = tempSC;
 		}
 	}
 }
