@@ -14,21 +14,25 @@ int main()
 		cout << "3. Close the program" << endl;
 		cin >> in;
 
+		GameController* gc{ nullptr };
+
 		switch (in) {
 		case 1:
 		{
-			GameController gc = GameController();
-			gc.gameLoop();
+			gc = new GameController();
 			break;
 		}
 		case 2:
 		{
-			ExperimentController* ec = new ExperimentController();
-			ec->gameLoop();
-			delete(ec);
+			gc = new ExperimentController();
 			break;
 		}
-		}		
+		}
+		if (gc != nullptr) {
+			gc->gameLoop();
+			delete(gc);
+		}
+
 	}
 
 	return 0;
