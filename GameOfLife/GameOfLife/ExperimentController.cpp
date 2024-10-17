@@ -126,23 +126,11 @@ void ExperimentController::findPatternExperiment()
 }
 
 void ExperimentController::findLowestERN() {
-	cout << "Input the number of experiments to run:" << endl;
-	cin >> numExperiments;	
-	int numThreads{ 6 };
-
-	auto start = chrono::high_resolution_clock::now();
-
-	vector<thread> threads;
-
-	for (int i = 0; i < numThreads; i++) {
-		threads.push_back(thread(&ExperimentController::boardHandler, this));
-	}
-
-	for (auto& t : threads) {
-		t.join();
-	}
-
-	auto end = std::chrono::high_resolution_clock::now();
+	cout << "Choose an option: " << endl;
+	cout << "1. Run an isolated experiment" << endl;
+	cout << "2. Search only for all time low ERNs" << endl;
+	int mode{ 0 };
+	cin >> mode;
 
 	ifstream fin;
 	fin.open("bestERNs.txt");
@@ -160,6 +148,33 @@ void ExperimentController::findLowestERN() {
 	getline(fin, line);
 	int bestLWSS = stoi(line);
 	fin.close();
+
+	if (mode == 2) {
+		blockERN = bestBlock;
+		beehiveERN = bestBeehive;
+		blinkerERN = bestBlinker;
+		toadERN = bestToad;
+		gliderERN = bestGlider;
+		scERN = bestLWSS;
+	}
+
+	cout << "Input the number of experiments to run:" << endl;
+	cin >> numExperiments;	
+	int numThreads{ 6 };
+
+	auto start = chrono::high_resolution_clock::now();
+
+	vector<thread> threads;
+
+	for (int i = 0; i < numThreads; i++) {
+		threads.push_back(thread(&ExperimentController::boardHandler, this));
+	}
+
+	for (auto& t : threads) {
+		t.join();
+	}
+
+	auto end = std::chrono::high_resolution_clock::now();
 
 	cout << "The lowest block ERN is " << blockERN << endl;
 	if (blockERN < bestBlock) {
@@ -250,7 +265,12 @@ void ExperimentController::findLowestERN() {
 		cout << "6. Display LWSS" << endl;
 		cin >> in;
 		if (in >= 1 && in <= 6) {
-			displayAllBoards(*expBoards[in - 1]);
+			if (expBoards[in - 1] == nullptr) {
+				cout << "No board found" << endl;
+			}
+			else {
+				displayAllBoards(*expBoards[in - 1]);
+			}
 		}
 	}
 
