@@ -40,6 +40,7 @@ void GameController::gameLoop()
             cout << "1. Step forward" << endl;
             cout << "2. End simulation" << endl;
             cout << "3. Save current state" << endl;
+            cout << "4. Look for specific pattern" << endl;
             cin >> in;
 
             switch (in) {
@@ -52,10 +53,35 @@ void GameController::gameLoop()
                 sim = false;
                 break;
             case 3:
+            {
                 string fname;
                 cout << "Enter the file name: " << endl;
                 cin >> fname;
                 board->saveBoard(fname);
+                break;
+            }
+            case 4:
+                cout << "Choose a pattern" << endl;
+                cout << "1. Block" << endl;
+                cout << "2. Beehive" << endl;
+                cout << "3. Blinker" << endl;
+                cout << "4. Toad" << endl;
+                cout << "5. Glider" << endl;
+                cout << "6. LWSS" << endl;
+                int choice;
+                cin >> choice;
+
+                while (true) {
+                    if (choice == 1 && board->get_foundBlock()) break;
+                    if (choice == 2 && board->get_foundBeehive()) break;
+                    if (choice == 3 && board->get_foundBlinker()) break;
+                    if (choice == 4 && board->get_foundToad()) break;
+                    if (choice == 5 && board->get_foundGlider()) break;
+                    if (choice == 6 && board->get_foundLWSS()) break;
+                    if (board->get_ended()) break;
+                    ++*board;
+                }
+                displayAllBoards();
                 break;
             }
 

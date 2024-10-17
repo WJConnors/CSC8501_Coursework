@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <random>
 #include <limits>
 #include <chrono>
@@ -143,12 +144,86 @@ void ExperimentController::findLowestERN() {
 
 	auto end = std::chrono::high_resolution_clock::now();
 
+	ifstream fin;
+	fin.open("bestERNs.txt");
+	string line;
+	getline(fin, line);
+	int bestBlock = stoi(line);
+	getline(fin, line);
+	int bestBeehive = stoi(line);
+	getline(fin, line);
+	int bestBlinker = stoi(line);
+	getline(fin, line);
+	int bestToad = stoi(line);
+	getline(fin, line);
+	int bestGlider = stoi(line);
+	getline(fin, line);
+	int bestLWSS = stoi(line);
+	fin.close();
+
 	cout << "The lowest block ERN is " << blockERN << endl;
+	if (blockERN < bestBlock) {
+		cout << " A new all time low" << endl;
+		bestBlock = blockERN;
+		blockBoard->saveOriginalBoard("BestBlock.txt");
+	}
+	else {
+		cout << "The all time low is " << bestBlock << endl;
+	}
 	cout << "The lowest beehive ERN is " << beehiveERN << endl;
+	if (beehiveERN < bestBeehive) {
+		cout << " A new all time low" << endl;
+		bestBeehive = beehiveERN;
+		beehiveBoard->saveOriginalBoard("BestBeehive.txt");
+	}
+	else {
+		cout << "The all time low is " << bestBeehive << endl;
+	}
 	cout << "The lowest blinker ERN is " << blinkerERN << endl;
+	if (blinkerERN < bestBlinker) {
+		cout << " A new all time low" << endl;
+		bestBlinker = blinkerERN;
+		blinkerBoard->saveOriginalBoard("BestBlinker.txt");
+	}
+	else {
+		cout << "The all time low is " << bestBlinker << endl;
+	}
 	cout << "The lowest toad ERN is " << toadERN << endl;
+	if (toadERN < bestToad) {
+		cout << " A new all time low" << endl;
+		bestToad = toadERN;
+		toadBoard->saveOriginalBoard("BestToad.txt");
+	}
+	else {
+		cout << "The all time low is " << bestToad << endl;
+	}
 	cout << "The lowest glider ERN is " << gliderERN << endl;
+	if (gliderERN < bestGlider) {
+		cout << " A new all time low" << endl;
+		bestGlider = gliderERN;
+		gliderBoard->saveOriginalBoard("BestGlider.txt");
+	}
+	else {
+		cout << "The all time low is " << bestGlider << endl;
+	}
 	cout << "The lowest LWSS ERN is " << scERN << endl;
+	if (scERN < bestLWSS) {
+		cout << " A new all time low" << endl;
+		bestLWSS = scERN;
+		scBoard->saveOriginalBoard("BestLWSS.txt");
+	}
+	else {
+		cout << "The all time low is " << bestLWSS << endl;
+	}
+	ofstream fout;
+	fout.open("bestERNs.txt");
+	fout << bestBlock << endl;
+	fout << bestBeehive << endl;
+	fout << bestBlinker << endl;
+	fout << bestToad << endl;
+	fout << bestGlider << endl;
+	fout << bestLWSS << endl;
+	fout.close();
 
 	auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
 	std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
