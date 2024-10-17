@@ -26,6 +26,7 @@ private:
 	int scERN{ std::numeric_limits<int>::max() };
 	int numExperiments;
 	atomic<int> n;
+	atomic<int> test;
 	mutex mtx;
 
 	Board* blockBoard{ nullptr };

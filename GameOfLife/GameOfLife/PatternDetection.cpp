@@ -4,10 +4,10 @@ using namespace Patterns;
 
 void Board::checkStaticPatterns()
 {
-    if (!foundBlock) {
+    if (!foundBlock && aliveCells >= 4) {
         foundBlock = checkPattern(block, block_x_size, block_y_size).first;
     }
-    if (!foundBeehive) {
+    if (!foundBeehive && aliveCells >= 6) {
         foundBeehive =
             checkPattern(beehive1, beehive1_x_size, beehive1_y_size).first ||
             checkPattern(beehive2, beehive2_x_size, beehive2_y_size).first;
@@ -17,10 +17,10 @@ void Board::checkStaticPatterns()
 
 void Board::checkOscillators()
 {
-    if (!foundBlinker) {
+    if (!foundBlinker && aliveCells >= 3) {
         foundBlinker = checkOscillator(blinker1, blinker2, blinker_size, bc);
     }
-    if (!foundToad) {
+    if (!foundToad && aliveCells >= 6) {
         foundToad = 
             checkOscillator(toad1_1, toad1_2, toad_size, tc1) ||
             checkOscillator(toad2_1, toad2_2, toad_size, tc2);
@@ -30,14 +30,14 @@ void Board::checkOscillators()
 
 void Board::checkSpaceShips()
 {
-    if (!foundGlider) {
+    if (!foundGlider && aliveCells >= 5) {
         foundGlider = 
             checkSpaceShip(gliders1, glider_size, glider_size, gc1, glider1Move) ||
             checkSpaceShip(gliders2, glider_size, glider_size, gc2, glider2Move) ||
             checkSpaceShip(gliders3, glider_size, glider_size, gc3, glider3Move) ||
             checkSpaceShip(gliders4, glider_size, glider_size, gc4, glider4Move);
     }
-    if (!foundLWSS) {
+    if (!foundLWSS && aliveCells >= 9) {
         foundLWSS =
             checkSpaceShip(scs1, sc1_x_size, sc1_y_size, lwss1, sc1Move) ||
             checkSpaceShip(scs2, sc2_x_size, sc2_y_size, lwss2, sc2Move) ||

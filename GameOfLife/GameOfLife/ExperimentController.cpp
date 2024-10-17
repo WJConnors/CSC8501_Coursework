@@ -8,7 +8,7 @@ using namespace std;
 using std::cout;
 
 ExperimentController::ExperimentController() :
-	n(0), numExperiments(1000) {}
+	n(0), numExperiments(1000), test(0) {}
 
 void ExperimentController::gameLoop()
 {
@@ -29,37 +29,72 @@ void ExperimentController::gameLoop()
 
 void ExperimentController::findPatternExperiment()
 {
-	cout << "Input board x size, y size, and number of starting alive cells:" << endl;
-	int x, y, a;
-	cin >> x;
-	cin >> y;
-	cin >> a;
+	cout << "Choose a pattern: " << endl;
+	cout << "1. Block" << endl;
+	cout << "2. Beehive" << endl;
+	cout << "3. Blinker" << endl;
+	cout << "4. Toad" << endl;
+	cout << "5. Glider" << endl;
+	cout << "6. LWSS" << endl;
+	int choice;
+	cin >> choice;
+
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<> numAlive(25, 900);
+
 	bool experiment{ true };
 	while (experiment) {
-		board = new Board(x, y, a);
+		board = new Board(numAlive(gen));
 		experimentCounter++;
 
+		if (choice != 1) board->set_foundBlock(true);
+		if (choice != 2) board->set_foundBeehive(true);
+		if (choice != 3) board->set_foundBlinker (true);
+		if (choice != 4) board->set_foundToad(true);
+		if (choice != 5) board->set_foundGlider(true);
+		if (choice != 6) board->set_foundLWSS(true);
+
+		auto start = chrono::high_resolution_clock::now();
 		while (true) {
 
-			if (board->get_foundBlock() || board->get_foundBeehive()) {
+			if (board->get_foundBlock() && choice == 1) {
 				experiment = false;
-				cout << "A static pattern has been found during experiment " << experimentCounter << endl;
+				cout << "A block pattern has been found during experiment " << experimentCounter << endl;
 				break;
 			}
 
-			if (board->get_foundBlinker() || board->get_foundToad()) {
+			if (board->get_foundBeehive() && choice == 2) {
 				experiment = false;
-				cout << "An oscillator has been found during experiment " << experimentCounter << endl;
+				cout << "A beehive pattern has been found during experiment " << experimentCounter << endl;
 				break;
 			}
 
-			if (board->get_foundGlider() || board->foundLWSS) {
+			if (board->get_foundBlinker() && choice == 3) {
 				experiment = false;
-				cout << "A spaceship has been found during experiment " << experimentCounter << endl;
+				cout << "An blinker has been found during experiment " << experimentCounter << endl;
 				break;
 			}
 
-			if (board->get_ended() || board->foundLWSS) {
+			if (board->get_foundToad() && choice == 4) {
+				experiment = false;
+				cout << "An toad has been found during experiment " << experimentCounter << endl;
+				break;
+			}
+
+			if (board->get_foundGlider() && choice == 5) {
+				experiment = false;
+				cout << "A glider has been found during experiment " << experimentCounter << endl;
+				break;
+			}
+
+			if (board->get_foundLWSS() && choice == 6) {
+				experiment = false;
+				cout << "A LWSS has been found during experiment " << experimentCounter << endl;
+				break;
+			}
+
+			if (board->get_ended()) {
 				break;
 			}
 
@@ -70,7 +105,10 @@ void ExperimentController::findPatternExperiment()
 			delete(board);
 		}
 	}
+	auto end = std::chrono::high_resolution_clock::now();
 	displayAllBoards(*board);
+	cout << "This board was experiment " << experimentCounter << endl;
+	std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
 }
 
 void ExperimentController::findLowestERN() {
@@ -101,6 +139,7 @@ void ExperimentController::findLowestERN() {
 
 	auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
 	std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
+	cout << test << endl;
 
 	Board* expBoards[6]{
 		blockBoard,
@@ -134,6 +173,8 @@ void ExperimentController::boardHandler()
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<> numAlive(25, 900);
+	//uniform_int_distribution<> xDistrib(30, 50);
+	//uniform_int_distribution<> yDistrib(30, 50);
 	Board* board;
 	while (true) {
 		if (n.fetch_add(1) >= numExperiments) {
@@ -154,19 +195,22 @@ void ExperimentController::boardHandler()
 		int tempGlider = gliderERN;
 		int tempSC = scERN;
 
+		//board = new Board(xDistrib(gen), yDistrib(gen), numAlive(gen));
 		board = new Board(numAlive(gen));
 		int curERN = board->getERN();
 
-		if (curERN > blockERN && curERN > beehiveERN && curERN > blinkerERN && curERN > toadERN && curERN > gliderERN && curERN > scERN) {
+		if (curERN > tempBlock) board->set_foundBlock(true);
+		if (curERN > tempBeehive) board->set_foundBeehive(true);
+		if (curERN > tempBlinker) board->set_foundBlinker(true);
+		if (curERN > tempToad) board->set_foundToad(true);
+		if (curERN > tempGlider) board->set_foundGlider(true);
+		if (curERN > tempSC) board->set_foundLWSS(true);
+
+		if (curERN > tempBlock && curERN > tempBeehive && curERN > tempBlinker && curERN > tempToad && curERN > tempGlider && curERN > tempSC) {
 			delete(board);
 			continue;
 		}
-		if (curERN > blockERN) board->set_foundBlock(true);
-		if (curERN > beehiveERN) board->set_foundBeehive(true);
-		if (curERN > blinkerERN) board->set_foundBlinker(true);
-		if (curERN > toadERN) board->set_foundToad(true);
-		if (curERN > gliderERN) board->set_foundGlider(true);
-		if (curERN > scERN) board->set_foundLWSS(true);
+
 
 		while (true) {
 
@@ -216,12 +260,12 @@ void ExperimentController::boardHandler()
 
 		{
 			lock_guard<mutex> lock(mtx);
-			if (tempBlockBoard != nullptr) { blockERN = tempBlock; delete blockBoard; blockBoard = new Board(*tempBlockBoard); }
-			if (tempBeehiveBoard != nullptr) { beehiveERN = tempBeehive; delete beehiveBoard; beehiveBoard = new Board(*tempBeehiveBoard); }
-			if (tempBlinkerBoard != nullptr) { blinkerERN = tempBlinker; delete blinkerBoard; blinkerBoard = new Board(*tempBlinkerBoard); }
-			if (tempToadBoard != nullptr) { toadERN = tempToad; delete toadBoard; toadBoard = new Board(*tempToadBoard); }
-			if (tempGliderBoard != nullptr) { gliderERN = tempGlider; delete gliderBoard; gliderBoard = new Board(*tempGliderBoard); }
-			if (tempSCBoard != nullptr) { scERN = tempSC; delete scBoard; scBoard = new Board(*tempSCBoard); }
+			if (tempBlockBoard != nullptr && tempBlock < blockERN) { blockERN = tempBlock; delete blockBoard; blockBoard = new Board(*tempBlockBoard); }
+			if (tempBeehiveBoard != nullptr && tempBeehive < beehiveERN) { beehiveERN = tempBeehive; delete beehiveBoard; beehiveBoard = new Board(*tempBeehiveBoard); }
+			if (tempBlinkerBoard != nullptr && tempBlinker < blinkerERN) { blinkerERN = tempBlinker; delete blinkerBoard; blinkerBoard = new Board(*tempBlinkerBoard); }
+			if (tempToadBoard != nullptr && tempToad < toadERN) { toadERN = tempToad; delete toadBoard; toadBoard = new Board(*tempToadBoard); }
+			if (tempGliderBoard != nullptr && tempGlider < gliderERN) { gliderERN = tempGlider; delete gliderBoard; gliderBoard = new Board(*tempGliderBoard); }
+			if (tempSCBoard != nullptr && tempSC < scERN) { scERN = tempSC; delete scBoard; scBoard = new Board(*tempSCBoard); }
 		}
 		delete board;
 		delete tempBlockBoard;
