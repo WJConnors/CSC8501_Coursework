@@ -120,7 +120,7 @@ void ExperimentController::findPatternExperiment()
 		string fname;
 		cout << "Enter the file name: " << endl;
 		cin >> fname;
-		board->saveBoard(fname);
+		board->saveOriginalBoard(fname);
 	}
 }
 

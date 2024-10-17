@@ -7,7 +7,7 @@ void GameController::createBoard()
 {
     cout << "Choose an option:" << endl;
     cout << "1. Create a new board" << endl;
-    cout << "2. Load the saved board" << endl;
+    cout << "2. Load a saved board" << endl;
     int in;
     cin >> in;
 
