@@ -314,7 +314,7 @@ void ExperimentController::boardHandler()
 		if (curERN > tempGlider) board->set_foundGlider(true);
 		if (curERN > tempSC) board->set_foundLWSS(true);
 
-		if (curERN > tempBlock && curERN > tempBeehive && curERN > tempBlinker && curERN > tempToad && curERN > tempGlider && curERN > tempSC) {
+		if (board->get_foundBlock() && board->get_foundBeehive() && board->get_foundBlinker() && board->get_foundToad() && board->get_foundGlider() && board->get_foundLWSS()) {
 			delete(board);
 			continue;
 		}
