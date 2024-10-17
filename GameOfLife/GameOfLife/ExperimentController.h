@@ -15,6 +15,8 @@ private:
 	void findPatternExperiment();
 	void findLowestERN();
 	void boardHandler();
+	void displayAllBoards(Board& board) const;
+	void displayBoard(vector<int> grid, int x_size, int y_size) const;
 
 	int blockERN{ std::numeric_limits<int>::max() };
 	int beehiveERN{ std::numeric_limits<int>::max() };
@@ -25,4 +27,13 @@ private:
 	int numExperiments;
 	atomic<int> n;
 	mutex mtx;
+
+	Board* blockBoard{ nullptr };
+	Board* beehiveBoard{ nullptr };
+	Board* blinkerBoard{ nullptr };
+	Board* toadBoard{ nullptr };
+	Board* gliderBoard{ nullptr };
+	Board* scBoard{ nullptr };
+
+
 };

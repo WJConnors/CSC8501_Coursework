@@ -70,13 +70,13 @@ void ExperimentController::findPatternExperiment()
 			delete(board);
 		}
 	}
-	displayAllBoards();
+	displayAllBoards(*board);
 }
 
 void ExperimentController::findLowestERN() {
 	cout << "Input the number of experiments to run:" << endl;
 	cin >> numExperiments;	
-	int numThreads{ 8 };
+	int numThreads{ 6 };
 
 	auto start = chrono::high_resolution_clock::now();
 
@@ -101,6 +101,32 @@ void ExperimentController::findLowestERN() {
 
 	auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
 	std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
+
+	Board* expBoards[6]{
+		blockBoard,
+		beehiveBoard,
+		blinkerBoard,
+		toadBoard,
+		gliderBoard,
+		scBoard
+	};
+
+	int in{ -1 };
+	while(in != 0) {
+		cout << "Choose an option:" << endl;
+		cout << "0. End experiment" << endl;
+		cout << "1. Display block" << endl;
+		cout << "2. Display beehive" << endl;
+		cout << "3. Display blinker" << endl;
+		cout << "4. Display toad" << endl;
+		cout << "5. Display glider" << endl;
+		cout << "6. Display LWSS" << endl;
+		cin >> in;
+		if (in >= 1 && in <= 6) {
+			displayAllBoards(*expBoards[in - 1]);
+		}
+	}
+
 }
 
 void ExperimentController::boardHandler()
@@ -108,12 +134,18 @@ void ExperimentController::boardHandler()
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<> numAlive(25, 900);
-	//uniform_int_distribution<> distribXY(30, 50);
 	Board* board;
 	while (true) {
 		if (n.fetch_add(1) >= numExperiments) {
 			break;
 		}
+
+		Board* tempBlockBoard{ nullptr };
+		Board* tempBeehiveBoard{ nullptr };
+		Board* tempBlinkerBoard{ nullptr };
+		Board* tempToadBoard{ nullptr };
+		Board* tempGliderBoard{ nullptr };
+		Board* tempSCBoard{ nullptr };
 
 		int tempBlock = blockERN;
 		int tempBeehive = beehiveERN;
@@ -122,7 +154,6 @@ void ExperimentController::boardHandler()
 		int tempGlider = gliderERN;
 		int tempSC = scERN;
 
-		//board = new Board(distribXY(gen), distribXY(gen), numAlive(gen));
 		board = new Board(numAlive(gen));
 		int curERN = board->getERN();
 
@@ -139,15 +170,45 @@ void ExperimentController::boardHandler()
 
 		while (true) {
 
-			if (board->get_foundBlock()) { if (curERN < tempBlock) tempBlock = curERN; }
-			if (board->get_foundBeehive()) { if (curERN < tempBeehive) tempBeehive = curERN; }
-			if (board->get_foundBlinker()) { if (curERN < tempBlinker) tempBlinker = curERN; }
-			if (board->get_foundToad()) { if (curERN < tempToad) tempToad = curERN; }
-			if (board->get_foundGlider()) { if (curERN < tempGlider) tempGlider = curERN; }
-			if (board->get_foundLWSS()) { if (curERN < tempSC) tempSC = curERN; }
+			if (board->get_foundBlock()) {
+				if (curERN < tempBlock) {
+					tempBlock = curERN;
+					if (tempBlockBoard == nullptr) tempBlockBoard = new Board(*board);
+				}
+			}
+			if (board->get_foundBeehive()) {
+				if (curERN < tempBeehive) {
+					tempBeehive = curERN;
+					if (tempBeehiveBoard == nullptr) tempBeehiveBoard = new Board(*board);
+				}
+			}
+			if (board->get_foundBlinker()) {
+				if (curERN < tempBlinker) {
+					tempBlinker = curERN;
+					if (tempBlinkerBoard == nullptr) tempBlinkerBoard = new Board(*board);
+				}
+			}
+			if (board->get_foundToad()) {
+				if (curERN < tempToad) {
+					tempToad = curERN;
+					if (tempToadBoard == nullptr) tempToadBoard = new Board(*board);
+				}
+			}
+			if (board->get_foundGlider()) {
+				if (curERN < tempGlider) {
+					tempGlider = curERN;
+					if (tempGliderBoard == nullptr) tempGliderBoard = new Board(*board);
+				}
+			}
+			if (board->get_foundLWSS()) {
+				if (curERN < tempSC) {
+					tempSC = curERN;
+					if (tempSCBoard == nullptr) tempSCBoard = new Board(*board);
+				}
+			}
 
 			if (board->get_ended()) {
-				delete(board);
+				
 				break;
 			}
 			++ * board;
@@ -155,12 +216,46 @@ void ExperimentController::boardHandler()
 
 		{
 			lock_guard<mutex> lock(mtx);
-			if (tempBlock < blockERN) blockERN = tempBlock;
-			if (tempBeehive < beehiveERN) beehiveERN = tempBeehive;
-			if (tempBlinker < blinkerERN) blinkerERN = tempBlinker;
-			if (tempToad < toadERN) toadERN = tempToad;
-			if (tempGlider < gliderERN) gliderERN = tempGlider;
-			if (tempSC < scERN) scERN = tempSC;
+			if (tempBlockBoard != nullptr) { blockERN = tempBlock; delete blockBoard; blockBoard = new Board(*tempBlockBoard); }
+			if (tempBeehiveBoard != nullptr) { beehiveERN = tempBeehive; delete beehiveBoard; beehiveBoard = new Board(*tempBeehiveBoard); }
+			if (tempBlinkerBoard != nullptr) { blinkerERN = tempBlinker; delete blinkerBoard; blinkerBoard = new Board(*tempBlinkerBoard); }
+			if (tempToadBoard != nullptr) { toadERN = tempToad; delete toadBoard; toadBoard = new Board(*tempToadBoard); }
+			if (tempGliderBoard != nullptr) { gliderERN = tempGlider; delete gliderBoard; gliderBoard = new Board(*tempGliderBoard); }
+			if (tempSCBoard != nullptr) { scERN = tempSC; delete scBoard; scBoard = new Board(*tempSCBoard); }
 		}
+		delete board;
+		delete tempBlockBoard;
+		delete tempBeehiveBoard;
+		delete tempBlinkerBoard;
+		delete tempToadBoard;
+		delete tempGliderBoard;
+		delete tempSCBoard;
+	}
+}
+
+void ExperimentController::displayAllBoards(Board& board) const
+{
+	auto boards{ board.get_allBoards() };
+	int steps = 1;
+	for (auto& grid : boards) {
+		cout << "This is the board after " << steps++ << " turns" << endl;
+		displayBoard(grid, board.get_x_size(), board.get_y_size());
+	}
+}
+
+void ExperimentController::displayBoard(vector<int> grid, int x_size, int y_size) const
+{
+	for (int i = 0; i < x_size; i++) {
+		cout << ".";
+		for (int j = 0; j < y_size; j++) {
+			int index = i * y_size + j;
+			if (grid[index] == 0) {
+				cout << " .";
+			}
+			else {
+				cout << "O.";
+			}
+		}
+		cout << endl;
 	}
 }
