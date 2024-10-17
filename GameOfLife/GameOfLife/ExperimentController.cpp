@@ -43,6 +43,7 @@ void ExperimentController::findPatternExperiment()
 	mt19937 gen(rd());
 	uniform_int_distribution<> numAlive(25, 900);
 
+	auto start = chrono::high_resolution_clock::now();
 	bool experiment{ true };
 	while (experiment) {
 		board = new Board(numAlive(gen));
@@ -54,8 +55,7 @@ void ExperimentController::findPatternExperiment()
 		if (choice != 4) board->set_foundToad(true);
 		if (choice != 5) board->set_foundGlider(true);
 		if (choice != 6) board->set_foundLWSS(true);
-
-		auto start = chrono::high_resolution_clock::now();
+		
 		while (true) {
 
 			if (board->get_foundBlock() && choice == 1) {
@@ -108,7 +108,20 @@ void ExperimentController::findPatternExperiment()
 	auto end = std::chrono::high_resolution_clock::now();
 	displayAllBoards(*board);
 	cout << "This board was experiment " << experimentCounter << endl;
+	auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
 	std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
+
+	cout << "Choose an option: " << endl;
+	cout << "1. Save board" << endl;
+	cout << "2. Discard board" << endl;
+	int in;
+	cin >> in;
+	if (in == 1) {
+		string fname;
+		cout << "Enter the file name: " << endl;
+		cin >> fname;
+		board->saveBoard(fname);
+	}
 }
 
 void ExperimentController::findLowestERN() {

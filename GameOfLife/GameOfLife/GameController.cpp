@@ -17,7 +17,10 @@ void GameController::createBoard()
         displayBoard();
         break;
     case 2:
-        board = new Board("test.txt");
+        string fname;
+        cout << "Enter the file name: " << endl;
+        cin >> fname;
+        board = new Board(fname);
         displayBoard();
         break;
     }
@@ -49,7 +52,10 @@ void GameController::gameLoop()
                 sim = false;
                 break;
             case 3:
-                board->saveBoard("test.txt");
+                string fname;
+                cout << "Enter the file name: " << endl;
+                cin >> fname;
+                board->saveBoard(fname);
                 break;
             }
 
@@ -139,11 +145,21 @@ void GameController::simInterrupt() const
         switch (in)
         {
         case 1:
-            board->saveBoard("test.txt");
+        {
+            string fname;
+            cout << "Enter the file name: " << endl;
+            cin >> fname;
+            board->saveBoard(fname);
             break;
+        }
         case 2:
-            board->saveOriginalBoard("test.txt");
+        {
+            string fname;
+            cout << "Enter the file name: " << endl;
+            cin >> fname;
+            board->saveOriginalBoard(fname);
             break;
+        }
         case 3:
             displayAllBoards();
             break;
