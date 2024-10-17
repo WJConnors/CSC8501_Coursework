@@ -163,7 +163,7 @@ void ExperimentController::findLowestERN() {
 
 	cout << "The lowest block ERN is " << blockERN << endl;
 	if (blockERN < bestBlock) {
-		cout << " A new all time low" << endl;
+		cout << "A new all time low" << endl;
 		bestBlock = blockERN;
 		blockBoard->saveOriginalBoard("BestBlock.txt");
 	}
@@ -172,7 +172,7 @@ void ExperimentController::findLowestERN() {
 	}
 	cout << "The lowest beehive ERN is " << beehiveERN << endl;
 	if (beehiveERN < bestBeehive) {
-		cout << " A new all time low" << endl;
+		cout << "A new all time low" << endl;
 		bestBeehive = beehiveERN;
 		beehiveBoard->saveOriginalBoard("BestBeehive.txt");
 	}
@@ -181,7 +181,7 @@ void ExperimentController::findLowestERN() {
 	}
 	cout << "The lowest blinker ERN is " << blinkerERN << endl;
 	if (blinkerERN < bestBlinker) {
-		cout << " A new all time low" << endl;
+		cout << "A new all time low" << endl;
 		bestBlinker = blinkerERN;
 		blinkerBoard->saveOriginalBoard("BestBlinker.txt");
 	}
@@ -190,7 +190,7 @@ void ExperimentController::findLowestERN() {
 	}
 	cout << "The lowest toad ERN is " << toadERN << endl;
 	if (toadERN < bestToad) {
-		cout << " A new all time low" << endl;
+		cout << "A new all time low" << endl;
 		bestToad = toadERN;
 		toadBoard->saveOriginalBoard("BestToad.txt");
 	}
@@ -199,7 +199,7 @@ void ExperimentController::findLowestERN() {
 	}
 	cout << "The lowest glider ERN is " << gliderERN << endl;
 	if (gliderERN < bestGlider) {
-		cout << " A new all time low" << endl;
+		cout << "A new all time low" << endl;
 		bestGlider = gliderERN;
 		gliderBoard->saveOriginalBoard("BestGlider.txt");
 	}
@@ -208,7 +208,7 @@ void ExperimentController::findLowestERN() {
 	}
 	cout << "The lowest LWSS ERN is " << scERN << endl;
 	if (scERN < bestLWSS) {
-		cout << " A new all time low" << endl;
+		cout << "A new all time low" << endl;
 		bestLWSS = scERN;
 		scBoard->saveOriginalBoard("BestLWSS.txt");
 	}

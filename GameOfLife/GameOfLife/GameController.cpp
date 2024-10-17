@@ -22,6 +22,7 @@ void GameController::createBoard()
         cin >> fname;
         board = new Board(fname);
         displayBoard();
+        cout << board->getERN();
         break;
     }
 }
