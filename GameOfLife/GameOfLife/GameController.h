@@ -7,7 +7,7 @@ public:
 	virtual void gameLoop();
 
 protected:
-	Board* board;
+	Board* board{ nullptr };
 
 	void createBoard();
 	void displayBoard() const;
