@@ -166,7 +166,7 @@ void GameController::simInterrupt() const
         cout << "2. Save the original board" << endl;
         cout << "3. View every step from the beginning" << endl;
         cout << "4. Discard the current board" << endl;
-        int in;
+        in;
         cin >> in;
 
         switch (in)
