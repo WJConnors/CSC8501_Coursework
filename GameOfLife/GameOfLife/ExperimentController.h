@@ -36,5 +36,6 @@ private:
 	Board* gliderBoard{ nullptr };
 	Board* scBoard{ nullptr };
 
+	bool showexperiment{ false };
 
 };

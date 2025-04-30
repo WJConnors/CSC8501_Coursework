@@ -4,6 +4,10 @@
 #include <limits>
 #include <chrono>
 #include <thread>
+#include <cstdlib>
+#include <sstream>
+#define NOMINMAX
+#include <Windows.h>
 #include "ExperimentController.h"
 using namespace std;
 using std::cout;
@@ -160,7 +164,14 @@ void ExperimentController::findLowestERN() {
 
 	cout << "Input the number of experiments to run:" << endl;
 	cin >> numExperiments;	
-	int numThreads{ 6 };
+	int numThreads{ showexperiment ? 1 : 6 };
+
+	// Hide the cursor
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cursorInfo;
+	GetConsoleCursorInfo(hOut, &cursorInfo);
+	cursorInfo.bVisible = FALSE; // Hide
+	SetConsoleCursorInfo(hOut, &cursorInfo);
 
 	auto start = chrono::high_resolution_clock::now();
 
@@ -175,6 +186,9 @@ void ExperimentController::findLowestERN() {
 	}
 
 	auto end = std::chrono::high_resolution_clock::now();
+
+	cursorInfo.bVisible = TRUE;
+	SetConsoleCursorInfo(hOut, &cursorInfo);
 
 	cout << "The lowest block ERN is " << blockERN << endl;
 	if (blockERN < bestBlock) {
@@ -322,6 +336,8 @@ void ExperimentController::boardHandler()
 
 		while (true) {
 
+			if (showexperiment) displayBoard(board->get_grid(), board->get_x_size(), board->get_y_size());
+
 			if (board->get_foundBlock()) {
 				if (curERN < tempBlock) {
 					tempBlock = curERN;
@@ -397,17 +413,24 @@ void ExperimentController::displayAllBoards(Board& board) const
 
 void ExperimentController::displayBoard(vector<int> grid, int x_size, int y_size) const
 {
+
+	system("cls");
+
+	ostringstream buffer;
+
 	for (int i = 0; i < x_size; i++) {
-		cout << ".";
+		buffer << ".";
 		for (int j = 0; j < y_size; j++) {
 			int index = i * y_size + j;
 			if (grid[index] == 0) {
-				cout << " .";
+				buffer << " .";
 			}
 			else {
-				cout << "O.";
+				buffer << "O.";
 			}
 		}
-		cout << endl;
+		buffer << endl;
 	}
+
+	cout << buffer.str();
 }
