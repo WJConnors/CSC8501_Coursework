@@ -173,19 +173,19 @@ void ExperimentController::findLowestERN() {
 	cursorInfo.bVisible = FALSE; // Hide
 	SetConsoleCursorInfo(hOut, &cursorInfo);
 
-	auto start = chrono::high_resolution_clock::now();
+	auto start = chrono::high_resolution_clock::now(); //Start time
 
 	vector<thread> threads;
 
 	for (int i = 0; i < numThreads; i++) {
-		threads.push_back(thread(&ExperimentController::boardHandler, this));
+		threads.push_back(thread(&ExperimentController::boardHandler, this)); //Begin all experiment threads
 	}
 
 	for (auto& t : threads) {
-		t.join();
+		t.join(); //Wait for all threads to finish
 	}
 
-	auto end = std::chrono::high_resolution_clock::now();
+	auto end = std::chrono::high_resolution_clock::now(); //End time
 
 	cursorInfo.bVisible = TRUE;
 	SetConsoleCursorInfo(hOut, &cursorInfo);

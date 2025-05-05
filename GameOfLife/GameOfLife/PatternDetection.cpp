@@ -91,13 +91,13 @@ bool Board::checkOscillator(const int(&pattern1)[N], const int(&pattern2)[N], in
     return false;
 }
 
+//Looking for spaceships
 bool Board::checkSpaceShip(const int* const patterns[4], int pattern_x_size, int pattern_y_size, SpaceShipCheck& sc, const pair<int, int> scMovement[4])
 {
-
-    if (sc.versionFound == -1) {
+    if (sc.versionFound == -1) { //If no part of the pattern has been found before
         for (int i = 0; i < 4; i++) {
             auto result = checkPattern(patterns[i], pattern_x_size, pattern_y_size);
-            if (result.first) {
+            if (result.first) { //Store which part of the pattern has been found and where
                 sc.versionFound = i;
                 sc.stepCount = 1;
                 sc.x = result.second.first + scMovement[i].first;
@@ -127,6 +127,7 @@ bool Board::checkSpaceShip(const int* const patterns[4], int pattern_x_size, int
     return false;
 }
 
+//Take pattern and search for it on board, returning a location if found
 pair<bool, pair<int, int>> Board::checkPattern(const int* pattern, int pattern_x_size, int pattern_y_size)
 {
     bool foundPattern{ true };
